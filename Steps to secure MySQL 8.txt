@@ -1,0 +1,9 @@
+1.	Rename root user
+
+use mysql;
+update user set user='studymama' where user='root';
+flush privileges;
+
+2.	Change root user password
+
+ALTER USER 'studymama'@'localhost' IDENTIFIED BY 'r00tP@$$w0rd';
