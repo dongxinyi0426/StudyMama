@@ -7,3 +7,22 @@ flush privileges;
 2.	Change root user password
 
 ALTER USER 'studymama'@'localhost' IDENTIFIED BY 'r00tP@$$w0rd';
+
+3. Run mysql secure installation script
+
+mysql_secure_installation --user=studymama
+
+	- 	Turn on VALIDATE PASSWORD COMPONENT
+	-	Set password validation policy to 2 = STRONG
+	-	Remove annoymous users
+	-	Disallow remote root login
+	-	Drop default 'test' databases
+	-	Reload privilege tables
+	
+4. Drop default sample 'sakila' database
+
+DROP SCHEMA sakila;
+
+5. Drop default sample 'world' database
+
+DROP SCHEMA world;

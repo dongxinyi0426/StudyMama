@@ -1,4 +1,5 @@
-mysql --user=studymama -pr00tP@$$w0rd --skip-column-names -f --silent
+mysql --user=studymama -pr00tP@$$w0rd --skip-column-names -f < mysat.80.sql > MySAT.htm
 
 \t MySAT.htm
 \. mysat.80.sql
+exit
