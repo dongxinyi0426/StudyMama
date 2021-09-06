@@ -1,0 +1,1126 @@
+mysql> \. mysat.80.sql
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" />
+<link rel="stylesheet" href="mysat.css" />
+<title>MySAT Report</title></head><body>
+<h1>MySQL Security Assessment Tool</h1>
+<p style="font-size:24px;font-weight: bold;text-align: center;">Highly Confidential
+<P><A NAME="top"></A>
+<p>Table of contents:
+<table class="none"><tr>
+<td><b><A HREF="#check">Security Checks</A></b>
+<td>&nbsp;
+<td><b><A HREF="#conf">Configuration &amp; Status</A></b>
+<tr><td><ul><li><A HREF="#ac"><b>Database Access Control</b></A><ul>
+<li><A HREF="#ac1">Separation of Roles</A>
+<li><A HREF="#ac2">Application credentials</A>
+<li><A HREF="#ac3">Developer access</A>
+<li><A HREF="#ac7">Lifecycle management</A>
+</ul><li><A HREF="#lg"><b>Monitoring and Audit</b></A><ul>
+<li><A HREF="#lg1">SQL controls</A>
+<li><A HREF="#lg2">Logging</A>
+<li><A HREF="#lg5">Auditing</A>
+</ul>
+<td><p><ul><li><A HREF="#dp"><b>Data Protection</b></A><ul>
+<li><A HREF="#dp1">Application encryption</A>
+<li><A HREF="#dp2">Tablespace encryption</A>
+<li><A HREF="#dp4">Network encryption</A>
+<li><A HREF="#dp7">Data Masking </A>
+</ul><li><A HREF="#sc"><b>Secure configuration</b></A><ul>
+<li><A HREF="#sc1">Version Check</A></li>
+<li><A HREF="#sc2">Database Hardening</A></li>
+<li><A HREF="#sc3">Patching</A></li>
+</ul>
+<td><p><ul><li><A HREF="#conf"><b>Database</b></A><ul>
+<li><A HREF="#status">Summary</A></li>
+<li><A HREF="#usr">Users</A>
+<li><A HREF="#obj">Schema/Object Matrix</A></li>
+<li><A HREF="#tbs">Space Usage</A></li>
+<li><A HREF="#big">Biggest Objects</A></li>
+<li><A HREF="#prc">Threads</A></li>
+<li><A HREF="#sga">Tuning Parameters</A> </li>
+<li><A HREF="#stat">Performance Statistics</A></li>
+<li><A HREF="#hostc">Connections</A></li>
+</ul>
+<tr><td><A HREF="#xgdpr"><b>GDPR Cross Reference</b><td><A HREF="#xcis"><b>CIS Benchmarks Cross Reference</b></A>
+<td> <A HREF="#xcve"><b>CVE Details</b></A>
+</table><p><br><hr>
+<P>Statistics generated on: 	2021-08-28 17:56:11
+ by: 	root@localhost	as: 	root@localhost
+using: <I><b>mysat.80.sql</b> v.1.0.3 (2018-10-01)
+<br>Software by 
+<A HREF="https://www.xenialab.com/english/">XeniaLAB</A></I><p><HR>
+<P><A NAME="check"></A><h2>Security Checks</h2>
+<table><tr><td><a name="ac"></a><h4>Database Access Control</h4><td><td><td width="50%">
+<tr><td><a name="ac1"></a><b>Separation of Roles</b>
+<tr><td><a name="ac1e"></a>CRUD users
+<td class="med">Fail<td>No CRUD users<td>
+<tr><td><a name="ac1f"></a>Roles
+<td class="low">Fail<td>No Active roles<td>
+<tr><td><a name="ac2"></a><b>Application user credential protection</b>
+<tr><td><a name="ac2a"></a>Connection strings
+<td class="ext">External<td>Check protection and obfuscation
+<tr><td><a name="ac3"></a><b>Application user credential usage</b>
+<tr><td><a name="ac3a"></a>Threads connections as
+<td class="pass">Pass<td>
+<tr><td><a name="ac7"></a><b>Lifecycle management</b>
+<tr><td><a name="ac7a"></a>Password expire
+<td class="eval">Evaluate<td>No users with password expire
+<tr><td><a name="ac8"><b>OS privilege escalation</b>
+<tr><td><a name="ac8a"></a>Anonymous user
+<td class="pass">Pass
+<tr><tr><td><a name="lg"></a><h4>Monitoring and Audit</h4>
+<tr><td><a name="lg1"></a><b>SQL controls</b>
+<tr><td><a name="lg1a"></a>Suspect SQL
+<td class="pass">Pass
+<tr><td><a name="lg1b"></a>Strict SQL mode
+<td class="pass">Pass
+<tr><td><a name="lg2"></a><b>Logging</b>
+<tr><td><a name="lg2a"></a>Slow log
+<td class="pass">Pass
+<tr><td><a name="lg2b"></a>Slow log timeout
+<td class="pass">Pass
+<tr><td><a name="lg2c"></a>Error Log
+<td class="pass">Pass<td>
+.\\DESKTOP-9S42RE7.err
+<tr><td><a name="lg2d"></a>Binlog Path
+<td class="pass">Pass<td>	C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Data\\DESKTOP-9S42RE7-bin
+<tr><td><a name="lg2e"></a>Error Level
+<td class="low">Fail<td>	2
+<tr><td><a name="lg3"></a><b>Log analysis</b>
+<tr><td><a name="lg3a"></a>Automatic log analyze<td class="ext">External<td>Log analysis is strongly suggested
+<tr><td><a name="lg4"></a><b>Event management</b>
+<tr><td><a name="lg4a"></a>Log Management<td class="ext">External<td>Log management is strongly suggested
+<tr><td><a name="lg5"></a><b>Auditing</b>
+<tr><td><a name="lg5a"></a>Auditing active
+<td class="high">Fail<td>Audit not enabled
+<tr><td><a name="lg5b"></a>Auditing event configuration
+<tr><td><a name="lg5c"></a>Auditing users whitelist
+<tr><tr><td><a name="dp"></a><h4>Data Protection</h4>
+<tr><td><a name="dp1"></a><b>Application encryption</b>
+<tr><td><a name="dp2"></a><b>Tablespace encryption</b>
+<tr><td><a name="dp2a"></a>Encryption enabled
+<td class="med">Fail<td>No at-rest encryption<td>
+<tr><td><a name="dp2c"></a>Suspect sensitive tables
+<td class="eval">Evaluate<td>Check suspect tables.columns: <td> 
+sakila.actor.first_name
+sakila.actor.last_name
+sakila.actor_info.first_name
+sakila.actor_info.last_name
+sakila.address.postal_code
+sakila.customer.email
+sakila.customer.first_name
+sakila.customer.last_name
+sakila.staff.email
+sakila.staff.first_name
+sakila.staff.last_name
+sakila.staff.password
+sakila.staff.username
+...
+<tr><td><a name="dp2d"></a>Redo encryption
+<td class="low">Fail<td>Not configured	<td>	NULL
+<tr><td><a name="dp2e"></a>Undo encryption
+<td class="low">Fail<td>Not configured	<td>	NULL
+<tr><td><a name="dp4"></a><b>Network encryption</b>
+<tr><td><a name="dp4a"></a>SSL/TLS configured
+<td class="pass">Pass
+<tr><td><a name="dp4b"></a>Users required to use encryption
+<td class="med">Fail<td>Encryption is not required
+<tr><td><a name="dp5"></a><b>Backup</b>
+<tr><td><a name="dp5a"></a>DB Backup execution
+<td class="eval">Evaluate<td>No backup detected
+<tr><td><a name="dp5b"></a>Backup encryption
+<td class="ext">External<td>Check backup encryption
+<tr><td><a name="dp5c"></a>Backup policies
+<td class="ext">External<td>Check backup retention policies
+<tr><td><a name="dp5d"></a>Binlog retention
+<td class="low">Fail<td>Not configured correctly
+<tr><td><a name="dp7"></a><b>Data Masking</b>
+<tr><td><a name="dp7a"></a>miXen package
+<td class="low">Fail<td>miXen data masking package not found
+<tr><tr><td><a name="sc"><h4>Secure configuration</h4>
+<tr><td><a name="sc1"><b>Version Check</b>
+<tr><td><a name="sc1a"></a>MySQL version
+<td class="pass">Pass
+<td>	8.0
+<tr><td><a name="sc2"><b>Database Hardening</b>
+<tr><td><a name="sc2a"></a>Anonymous user
+<td class="pass">Pass
+<tr><td><a name="sc2b"></a>Any host access
+<td class="pass">Pass
+<tr><td><a name="sc2b2"></a>Many hosts access
+<td class="pass">Pass
+<tr><td><a name="sc2b"></a>Any host access
+<td class="pass">Pass
+<tr><td><a name="sc2b2"></a>Many host access
+<td class="pass">Pass
+<tr><td><a name="sc2c"></a>DB Password check
+<td class="pass">Pass
+<tr><td><a name="sc2d"></a>Backdoor users
+<td class="pass">Pass
+<tr><td><a name="sc2d2"></a>Test schema
+<td class="pass">Pass
+<tr><td><a name="sc2e"></a>Admin users <>root
+<td class="pass">Pass
+<tr><td><a name="sc2e2"></a>Oper users <>root
+<td class="pass">Pass
+<tr><td><a name="sc2e3"></a>Authentication Plugin
+<td class="pass">Pass
+<tr><td><a name="sc2e4"></a>Password reuse history
+<td class="eval">Evaluate<td><td> 
+root
+<tr><td><a name="sc2e4"></a>Password reuse time
+<td class="eval">Evaluate<td><td> 
+root
+<tr><td><a name="sc2f"></a>IDS<td class="ext">External<td>Configure IDS to monitor honeypot
+<tr><td><a name="sc2g"></a>Spammable tables
+<td class="pass">Pass
+<tr><td><a name="sc2h"></a>Dedicated datadir
+<td class="pass">Pass
+<tr><td><a name="sc2i"></a>Memcache plugin
+<td class="pass">Pass
+<tr><td><a name="sc2l"></a>secure_file_priv
+<td class="pass">Pass
+<tr><td><a name="sc2m"></a>Master Info
+<td class="pass">Pass
+<tr><td><a name="sc2n"></a>Automatic User Creation
+<td class="pass">Pass<td>Always disabled in 8.0
+<tr><td><a name="sc2o"></a>Password lenght
+<td class="med">Fail<td>Too short<td>	NULL
+<tr><td><a name="sc2p"></a>Password policy
+<td class="med">Fail<td>Not secure<td>	NULL
+<tr><td><a name="sc2p2"></a>Password validate component
+<td class="med">Fail<td>Component not installed<td>
+<tr><td><a name="sc2q"></a>Performance statistics
+<td class="low">Fail<td>my2 collector not found
+<tr><td><a name="sc2r"></a>local_infile
+<td class="pass">Pass
+<tr><td><a name="sc2s"></a>Symbolic Links
+<td class="pass">Pass
+<tr><td><a name="sc2u"></a>Skip grant
+<td class="ext">Evaluate<td>Do not enable skip_grant_tables
+<tr><td><a name="sc3"><b>Patching</b>
+<tr><td><a name="sc3a"></a>MySQL update
+<td class="med">Fail
+<td>	8.0.26
+<tr><td><a name="sc3c"></a>MySAT update
+<td class="med">Fail
+<td>1.0.3
+<!-- 1st April check -->
+<tr><td>&nbsp;<tr><td><a name="gdpr1"><b>GDPR Countdown</b>
+<tr><td><a name="gdpr1a"></a>Days since promulgation
+<td class="pass">Pass
+<td>	1949
+<tr><td><a name="gdpr1b"></a>Days since application
+<td class="pass">Pass<td>
+1191
+<tr><td>&nbsp;</table><p>
+<hr><P><A NAME="conf"></A><h2>DB Configuration</h2>
+<P><A NAME="status"></A>
+<P><table border="2"><tr><td><b>Database Summary</b></td></tr>
+<tr><td><b>Item</b>	<td><b>Value</b>
+<tr><td>Version :	<td>	8.0.26
+<tr><td>Created :	<td>	2021-08-28 08:59:27
+<tr><td>Started :	<td>	2021-08-28 16:59:32
+<tr><td>Database Size (MB):	<td align=right>	10
+<tr><td>Buffers Size (MB):	<td align="right">	191
+<tr><td>Defined Users :	<td align="right">	4
+<tr><td>Defined Schemata :	<td align="right">	5
+<tr><td>Defined Tables :	<td align=right>	353
+<tr><td>Sessions :	<td align="right">	4
+<tr><td>Sessions (active) :	<td align="right">	2
+<tr><td>Questions (#/sec.) :	<td align=right>	3.07796
+<tr><td>Connections (#/sec.) :	<td align=right>	0.01648
+<tr><td>BinLog Writes Day (MB) :	<td align=right>	285
+<tr><td>Hostname :	<td>	DESKTOP-9S42RE7
+<tr><td>Port :	<td>	3306
+</table><p>
+<P><A NAME="usr"></A>
+<P><table border="2"><tr><td><b>Users</b></td></tr>
+<tr><td><b>User</b>	<td><b>Host</b>	<td><b><code>SL IUD CDGRIA CCS CAE RR SSPFSR</code></b>	<td><b>Select</b>	<td><b>Execute</b>	<td><b>Grant</b>	<td><b>Expired</b>	<td><b>Locked</b>	<td><b>Password lifetime</b>	<td><b>Password history</b>	<td><b>Plugin</b>
+<tr><td>	mysql.infoschema	<td>	localhost	<td><code>	YN NNN NNNNNN NNN NNN NN NNNNNN	</code><td>	Y	<td>	N	<td>	N	<td>	N	<td>	Y	<td>	NULL	<td>	NULL	 over 	NULL	gg	<td>	caching_sha2_password
+<tr><td>	mysql.session	<td>	localhost	<td><code>	NN NNN NNNNNN NNN NNN NN YYNNNN	</code><td>	N	<td>	N	<td>	N	<td>	N	<td>	Y	<td>	NULL	<td>	NULL	 over 	NULL	gg	<td>	caching_sha2_password
+<tr><td>	mysql.sys	<td>	localhost	<td><code>	NN NNN NNNNNN NNN NNN NN NNNNNN	</code><td>	N	<td>	N	<td>	N	<td>	N	<td>	Y	<td>	NULL	<td>	NULL	 over 	NULL	gg	<td>	caching_sha2_password
+<tr><td>	root	<td>	localhost	<td><code>	YY YYY YYYYYY YYY YYY YY YYYYYY	</code><td>	Y	<td>	Y	<td>	Y	<td>	N	<td>	N	<td>	NULL	<td>	NULL	 over 	NULL	gg	<td>	caching_sha2_password
+</table><p>
+<P><A NAME="obj"></A>
+<P><table border="2"><tr><td><b>Schema/Object Matrix</b></td></tr>
+<tr><td><b>Database</b>	<td><b> Tables</b>	<td><b> Indexes</b>	<td><b> Routines</b>	<td><b> Triggers</b>	<td><b> Views</b>	<td><b> Primary Keys</b>	<td><b> Foreign Keys</b>	<td><b> All</b>
+<tr><td>	information_schema	<td align=right>	79	<td align=right>	0	<td align=right>	0	<td align=right>	0	<td align=right>	0	<td align=right>	0	<td align=right>	0	<td align=right>	79
+<tr><td>	mysql	<td align=right>	37	<td align=right>	38	<td align=right>	0	<td align=right>	0	<td align=right>	0	<td align=right>	35	<td align=right>	0	<td align=right>	110
+<tr><td>	performance_schema	<td align=right>	110	<td align=right>	95	<td align=right>	0	<td align=right>	0	<td align=right>	0	<td align=right>	61	<td align=right>	0	<td align=right>	266
+<tr><td>	sakila	<td align=right>	23	<td align=right>	40	<td align=right>	6	<td align=right>	6	<td align=right>	7	<td align=right>	16	<td align=right>	22	<td align=right>	120
+<tr><td>	sys	<td align=right>	101	<td align=right>	1	<td align=right>	48	<td align=right>	2	<td align=right>	100	<td align=right>	1	<td align=right>	0	<td align=right>	253
+<tr><td>	world	<td align=right>	3	<td align=right>	5	<td align=right>	0	<td align=right>	0	<td align=right>	0	<td align=right>	3	<td align=right>	2	<td align=right>	13
+<tr><td>	NULL	<td align=right>	353	<td align=right>	179	<td align=right>	54	<td align=right>	8	<td align=right>	107	<td align=right>	116	<td align=right>	24	<td align=right>	841
+</table><p>
+<P><A NAME="tbs"></A>
+<P><table border="2"><tr><td><b>Space Usage</b></td></tr>
+<tr><td><b>Database	<td><b>Row#</b>	<td><b>Data size</b>	<td><b>Index size</b>	<td><b>Total size</b>	<td><b></b>	<td><b>MyISAM</b>	<td><b>InnoDB</b>	<td><b>Created</b>
+<tr><td>	information_schema	<td align=right>	0	<td align=right>	0	<td align=right>	0	<td align=right>	0	<td>	<td align=right>	0	<td align=right>	0	<td>	2021-08-28
+<tr><td>	mysql	<td align=right>	3,962	<td align=right>	2,375,680	<td align=right>	344,064	<td align=right>	2,719,744	<td>	<td align=right>	0	<td align=right>	2,719,744	<td>	2021-08-28
+<tr><td>	performance_schema	<td align=right>	2,815,442	<td align=right>	0	<td align=right>	0	<td align=right>	0	<td>	<td align=right>	0	<td align=right>	0	<td>	2021-08-28
+<tr><td>	sakila	<td align=right>	47,274	<td align=right>	4,374,528	<td align=right>	2,392,064	<td align=right>	6,766,592	<td>	<td align=right>	0	<td align=right>	6,766,592	<td>	2021-08-28
+<tr><td>	sys	<td align=right>	6	<td align=right>	16,384	<td align=right>	0	<td align=right>	16,384	<td>	<td align=right>	0	<td align=right>	16,384	<td>	2021-08-28
+<tr><td>	world	<td align=right>	5,411	<td align=right>	606,208	<td align=right>	196,608	<td align=right>	802,816	<td>	<td align=right>	0	<td align=right>	802,816	<td>	2021-08-28
+<tr><td>	NULL	<td align=right>	2,872,095	<td align=right>	7,372,800	<td align=right>	2,932,736	<td align=right>	10,305,536	<td>	<td align=right>	0	<td align=right>	10,305,536	<td>	2021-08-28
+</table><p>
+<P><A NAME="big"></A>
+<P><table border="2"><tr><td><b>Biggest Objects</b></td></tr>
+<tr><td><b>Database</b>	<td><b>Object</b>	<td><b>Type</b>	<td><b>Engine</b>	<td><b>Bytes</b>	<td><b>Est. rows</b>
+<tr><td>	sakila	<td>	rental	<td>T	<td>	InnoDB	<td align=right>	2,785,280	<td align=right>	16,008
+<tr><td>	sakila	<td>	payment	<td>T	<td>	InnoDB	<td align=right>	2,228,224	<td align=right>	16,086
+<tr><td>	mysql	<td>	help_topic	<td>T	<td>	InnoDB	<td align=right>	1,687,552	<td align=right>	603
+<tr><td>	world	<td>	city	<td>T	<td>	InnoDB	<td align=right>	540,672	<td align=right>	4,188
+<tr><td>	sakila	<td>	inventory	<td>T	<td>	InnoDB	<td align=right>	376,832	<td align=right>	4,581
+<tr><td>	sakila	<td>	film	<td>T	<td>	InnoDB	<td align=right>	278,528	<td align=right>	1,000
+<tr><td>	sakila	<td>	film_actor	<td>T	<td>	InnoDB	<td align=right>	278,528	<td align=right>	5,462
+<tr><td>	mysql	<td>	help_keyword	<td>T	<td>	InnoDB	<td align=right>	262,144	<td align=right>	1,142
+<tr><td>	sakila	<td>	film_text	<td>T	<td>	InnoDB	<td align=right>	196,608	<td align=right>	1,000
+<tr><td>	world	<td>	countrylanguage	<td>T	<td>	InnoDB	<td align=right>	163,840	<td align=right>	984
+</table><p>
+<P><A NAME="prc"></A>
+<P><table border="2"><tr><td><b>Processes</b></td></tr>
+<tr><td><b>Id</b><td><b>User</b><td><b>Host</b>
+<td><b>DB</b><td><b>Command</b><td><b>Time</b><td><b>State</b>
+<tr><td>	5	<td>	event_scheduler	<td>	localhost	<td>	NULL	<td>	Daemon	<td>	3399	<td>	Waiting on empty queue
+<tr><td>	49	<td>	root	<td>	localhost:63463	<td>	NULL	<td>	Sleep	<td>	504	<td>	
+<tr><td>	50	<td>	root	<td>	localhost:63464	<td>	information_schema	<td>	Sleep	<td>	402	<td>	
+<tr><td>	56	<td>	root	<td>	localhost:54586	<td>	information_schema	<td>	Query	<td>	0	<td>	executing
+</table><p>
+<P><A NAME="sga"></A>
+<P><table border="2"><tr><td><b>Tuning Parameters (most used ones)</b></td></tr>
+<tr><td><b>Parameter</b>	<td><b>Value</b><td><b>Type</b>
+<tr><td>	binlog_cache_size	<td align=right>	32,768	<td>Client Cache
+<tr><td>	binlog_stmt_cache_size	<td align=right>	32,768	<td>Client Cache
+<tr><td>	innodb_buffer_pool_size	<td align=right>	8,388,608	<td>Cache
+<tr><td>	innodb_flush_log_at_timeout	<td align=right>	1	<td>Tuning and timeout
+<tr><td>	innodb_flush_log_at_trx_commit	<td align=right>	1	<td>Tuning and timeout
+<tr><td>	innodb_lock_wait_timeout	<td align=right>	50	<td>Tuning and timeout
+<tr><td>	innodb_log_buffer_size	<td align=right>	1,048,576	<td>Cache
+<tr><td>	innodb_log_file_size	<td align=right>	50,331,648	<td>Cache
+<tr><td>	innodb_log_files_in_group	<td align=right>	2	<td>Tuning and timeout
+<tr><td>	innodb_thread_concurrency	<td align=right>	9	<td>Tuning and timeout
+<tr><td>	join_buffer_size	<td align=right>	262,144	<td>Client Cache
+<tr><td>	key_buffer_size	<td align=right>	8,388,608	<td>Cache
+<tr><td>	log_bin	<td align=right>	ON	<td>Flag
+<tr><td>	long_query_time	<td align=right>	10	<td>Tuning and timeout
+<tr><td>	max_connections	<td align=right>	151	<td>Client Cache
+<tr><td>	max_heap_table_size	<td align=right>	16,777,216	<td>Cache
+<tr><td>	read_buffer_size	<td align=right>	65,536	<td>Client Cache
+<tr><td>	read_rnd_buffer_size	<td align=right>	262,144	<td>Client Cache
+<tr><td>	slow_query_log	<td align=right>	ON	<td>Flag
+<tr><td>	sort_buffer_size	<td align=right>	262,144	<td>Client Cache
+<tr><td>	sync_binlog	<td align=right>	1	<td>Tuning and timeout
+<tr><td>	table_open_cache	<td align=right>	2,000	<td>Cache
+<tr><td>	thread_stack	<td align=right>	286,720	<td>Client Cache
+<tr><td>	tmp_table_size	<td align=right>	91,226,112	<td>Cache
+<tr><td>	wait_timeout	<td align=right>	28,800	<td>Tuning and timeout
+</table><p>
+<P><A NAME="stat"></A>
+<P><table border="2"><tr><td><b>Performance Statistics Summary</b></td></tr>
+<tr><td><b>Statistic</b><td><b>Value</b><td><b>Suggested value</b><td><b>Potential Action</b>
+<tr><!01><td>	Uptime	 (days)<td align=right>	0		
+<tr><!15><td>	Buffer Cache: MyISAM Read Hit Ratio	<td align=right>	NULL	<td> >95	<td>Increase KEY_BUFFER_SIZE
+<tr><!16><td>	Buffer Cache: InnoDB Read Hit Ratio	<td align=right>	99.67	<td> >95	<td>Increase INNODB_BUFFER_SIZE
+<tr><!17><td>	Buffer Cache: MyISAM Write Hit Ratio	<td align=right>	NULL	<td> >95	<td>Increase KEY_BUFFER_SIZE
+<tr><!18><td>	Log Cache: InnoDB Log Write Ratio	<td align=right>	97.47	<td> >95	<td>Increase INNODB_LOG_BUFFER_SIZE
+<tr><!20><td>	Threads_connected	<td align=right>	3 /151	<td>Far from maximum	<td>Increase MAX_CONNECTIONS
+<tr><!21><td>	Threads_running	<td align=right>	2	<td>LOW	<td>Check user load
+<tr><!30><td>	Slow_queries	<td align=right>	0	<td>LOW	<td>Check application
+<tr><!35><td>	DBcpu (SUM_TIMER_WAIT)	<td align=right>	0.00141		
+<tr><!37><td>	Connections	 #/sec.<td align=right>	0.01648		
+<tr><!40><td>	Questions	 #/sec.<td align=right>	3.08856		
+<tr><!41><td>	SELECT	 #/sec.<td align=right>	1.40100		
+<tr><!42><td>	COMMIT	 #/sec. (TPS)<td align=right>	0.00530		
+<tr><!45><td>	COM DML #/sec.	<td align=right>	2.96587		
+<tr><!50><td>	Bytes_sent	 Mb/sec.<td align=right>	0.00411		
+<tr><!51><td>	Bytes_received	 Mb/sec.<td align=right>	0.01015		
+</table><p>
+<a id="sqls"></a><P><table border="2"><tr><td><b>SQL Statements</b></td>
+<td align="right">Representativeness:	100.00	%
+<tr><td><b>Schema</b>	<td><b>Text</b>	<td><b>Count</b>	<td><b>Sum Timer</b>	<td><b>Human Timer</b>	<td><b>Average (sec.)</b>	<td><b>Rows affected</b>	<td><b>Rows Sent</b>	<td><b>Rows Examined</b>	<td><b>TMP Disk Create</b>	<td><b>TMP Create</b>	<td><b>Sort Merge#</b>	<td><b>No Index</b>	<td><b>No Good Index</b>
+<tr><td>	information_schema	<td>	SELECT ( `cat` . `name` COLLATE `utf8_tolower_ci` ) AS `TABLE_CATALOG` , ( `sch` . `name` COLLATE `utf8_tolower_ci` ) AS `TABLE_SCHE	 ...<td align="right">	99	<td align="right">	697950800000	<td align="right">	00:00:00.6979	<td align="right">	0.007	<td align="right">	0	<td align="right">	407	<td align="right">	66177	<td align="right">	22	<td>	44	<td>	0	<td>	35	<td align="right">	0
+<tr><td>	sakila	<td>	INSERT INTO `payment` VALUES (...) /* , ... */	 ...<td align="right">	2	<td align="right">	396575200000	<td align="right">	00:00:00.3965	<td align="right">	0.198	<td align="right">	16049	<td align="right">	0	<td align="right">	0	<td align="right">	0	<td>	0	<td>	0	<td>	0	<td align="right">	0
+<tr><td>	sakila	<td>	INSERT INTO `rental` VALUES (...) /* , ... */	 ...<td align="right">	2	<td align="right">	382859900000	<td align="right">	00:00:00.3828	<td align="right">	0.191	<td align="right">	16044	<td align="right">	0	<td align="right">	0	<td align="right">	0	<td>	0	<td>	0	<td>	0	<td align="right">	0
+<tr><td>	world	<td>	INSERT INTO `City` VALUES (...)	 ...<td align="right">	4079	<td align="right">	350700200000	<td align="right">	00:00:00.3507	<td align="right">	0.000	<td align="right">	4079	<td align="right">	0	<td align="right">	0	<td align="right">	0	<td>	0	<td>	0	<td>	0	<td align="right">	0
+<tr><td>	information_schema	<td>	SELECT ( `cat` . `name` COLLATE `utf8_tolower_ci` ) AS `CONSTRAINT_CATALOG` , ( `sch` . `name` COLLATE `utf8_tolower_ci` ) AS `CONST	 ...<td align="right">	11	<td align="right">	330376200000	<td align="right">	00:00:00.3303	<td align="right">	0.030	<td align="right">	0	<td align="right">	77	<td align="right">	18502	<td align="right">	0	<td>	77	<td>	0	<td>	11	<td align="right">	0
+</table><p>
+<P><A NAME="hostc"></A>
+<P><table border="2"><tr><td><b>Host Cache</b></td></tr>
+<tr><td><b>Host</b>	<td><b>IP</b>	<td><b>Validated</b>	<td><b>SUM Errors</b>	<td><b>First Seen</b>	<td><b>Last Seen</b>	<td><b>Last Error Seen</b>	<td><b># Handshake Err.</b>	<td><b># Authentication Err.</b>	<td><b># ACL Err.</b>
+</table><p>
+<P><A NAME="par"></A>
+<P><table border="2"><tr><td><b>MySQL Parameters</b></td></tr>
+<tr><td><b>Parameter</b>	<td><b>Value</b>
+<tr><td>	activate_all_roles_on_login	<td>	OFF
+<tr><td>	admin_address	<td>	
+<tr><td>	admin_port	<td>	33062
+<tr><td>	admin_ssl_ca	<td>	
+<tr><td>	admin_ssl_capath	<td>	
+<tr><td>	admin_ssl_cert	<td>	
+<tr><td>	admin_ssl_cipher	<td>	
+<tr><td>	admin_ssl_crl	<td>	
+<tr><td>	admin_ssl_crlpath	<td>	
+<tr><td>	admin_ssl_key	<td>	
+<tr><td>	admin_tls_ciphersuites	<td>	
+<tr><td>	admin_tls_version	<td>	TLSv1, TLSv1.1, TLSv1.2, TLSv1.3
+<tr><td>	auto_generate_certs	<td>	ON
+<tr><td>	auto_increment_increment	<td>	1
+<tr><td>	auto_increment_offset	<td>	1
+<tr><td>	autocommit	<td>	ON
+<tr><td>	automatic_sp_privileges	<td>	ON
+<tr><td>	avoid_temporal_upgrade	<td>	OFF
+<tr><td>	back_log	<td>	80
+<tr><td>	basedir	<td>	C:\\Program Files\\MySQL\\MySQL Server 8.0\\
+<tr><td>	big_tables	<td>	OFF
+<tr><td>	bind_address	<td>	*
+<tr><td>	binlog_cache_size	<td>	32768
+<tr><td>	binlog_checksum	<td>	CRC32
+<tr><td>	binlog_direct_non_transactional_updates	<td>	OFF
+<tr><td>	binlog_encryption	<td>	OFF
+<tr><td>	binlog_error_action	<td>	ABORT_SERVER
+<tr><td>	binlog_expire_logs_seconds	<td>	2592000
+<tr><td>	binlog_format	<td>	ROW
+<tr><td>	binlog_group_commit_sync_delay	<td>	0
+<tr><td>	binlog_group_commit_sync_no_delay_count	<td>	0
+<tr><td>	binlog_gtid_simple_recovery	<td>	ON
+<tr><td>	binlog_max_flush_queue_time	<td>	0
+<tr><td>	binlog_order_commits	<td>	ON
+<tr><td>	binlog_rotate_encryption_master_key_at_startup	<td>	OFF
+<tr><td>	binlog_row_event_max_size	<td>	8192
+<tr><td>	binlog_row_image	<td>	FULL
+<tr><td>	binlog_row_metadata	<td>	MINIMAL
+<tr><td>	binlog_row_value_options	<td>	
+<tr><td>	binlog_rows_query_log_events	<td>	OFF
+<tr><td>	binlog_stmt_cache_size	<td>	32768
+<tr><td>	binlog_transaction_compression	<td>	OFF
+<tr><td>	binlog_transaction_compression_level_zstd	<td>	3
+<tr><td>	binlog_transaction_dependency_history_size	<td>	25000
+<tr><td>	binlog_transaction_dependency_tracking	<td>	COMMIT_ORDER
+<tr><td>	block_encryption_mode	<td>	aes-128-ecb
+<tr><td>	bulk_insert_buffer_size	<td>	8388608
+<tr><td>	caching_sha2_password_auto_generate_rsa_keys	<td>	ON
+<tr><td>	caching_sha2_password_digest_rounds	<td>	5000
+<tr><td>	caching_sha2_password_private_key_path	<td>	private_key.pem
+<tr><td>	caching_sha2_password_public_key_path	<td>	public_key.pem
+<tr><td>	character_set_client	<td>	utf8mb4
+<tr><td>	character_set_connection	<td>	utf8mb4
+<tr><td>	character_set_database	<td>	utf8mb4
+<tr><td>	character_set_filesystem	<td>	binary
+<tr><td>	character_set_results	<td>	utf8mb4
+<tr><td>	character_set_server	<td>	utf8mb4
+<tr><td>	character_set_system	<td>	utf8mb3
+<tr><td>	character_sets_dir	<td>	C:\\Program Files\\MySQL\\MySQL Server 8.0\\share\\charsets\\
+<tr><td>	check_proxy_users	<td>	OFF
+<tr><td>	collation_connection	<td>	utf8mb4_0900_ai_ci
+<tr><td>	collation_database	<td>	utf8mb4_0900_ai_ci
+<tr><td>	collation_server	<td>	utf8mb4_0900_ai_ci
+<tr><td>	completion_type	<td>	NO_CHAIN
+<tr><td>	concurrent_insert	<td>	AUTO
+<tr><td>	connect_timeout	<td>	10
+<tr><td>	core_file	<td>	OFF
+<tr><td>	create_admin_listener_thread	<td>	OFF
+<tr><td>	cte_max_recursion_depth	<td>	1000
+<tr><td>	datadir	<td>	C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Data\\
+<tr><td>	default_authentication_plugin	<td>	caching_sha2_password
+<tr><td>	default_collation_for_utf8mb4	<td>	utf8mb4_0900_ai_ci
+<tr><td>	default_password_lifetime	<td>	0
+<tr><td>	default_storage_engine	<td>	InnoDB
+<tr><td>	default_table_encryption	<td>	OFF
+<tr><td>	default_tmp_storage_engine	<td>	InnoDB
+<tr><td>	default_week_format	<td>	0
+<tr><td>	delay_key_write	<td>	ON
+<tr><td>	delayed_insert_limit	<td>	100
+<tr><td>	delayed_insert_timeout	<td>	300
+<tr><td>	delayed_queue_size	<td>	1000
+<tr><td>	disabled_storage_engines	<td>	
+<tr><td>	disconnect_on_expired_password	<td>	ON
+<tr><td>	div_precision_increment	<td>	4
+<tr><td>	end_markers_in_json	<td>	OFF
+<tr><td>	enforce_gtid_consistency	<td>	OFF
+<tr><td>	eq_range_index_dive_limit	<td>	200
+<tr><td>	event_scheduler	<td>	ON
+<tr><td>	expire_logs_days	<td>	0
+<tr><td>	explicit_defaults_for_timestamp	<td>	ON
+<tr><td>	flush	<td>	OFF
+<tr><td>	flush_time	<td>	0
+<tr><td>	foreign_key_checks	<td>	ON
+<tr><td>	ft_boolean_syntax	<td>	+ -><()~*:""&|
+<tr><td>	ft_max_word_len	<td>	84
+<tr><td>	ft_min_word_len	<td>	4
+<tr><td>	ft_query_expansion_limit	<td>	20
+<tr><td>	ft_stopword_file	<td>	(built-in)
+<tr><td>	general_log	<td>	OFF
+<tr><td>	general_log_file	<td>	DESKTOP-9S42RE7.log
+<tr><td>	generated_random_password_length	<td>	20
+<tr><td>	group_concat_max_len	<td>	1024
+<tr><td>	group_replication_consistency	<td>	EVENTUAL
+<tr><td>	gtid_executed	<td>	
+<tr><td>	gtid_executed_compression_period	<td>	0
+<tr><td>	gtid_mode	<td>	OFF
+<tr><td>	gtid_owned	<td>	
+<tr><td>	gtid_purged	<td>	
+<tr><td>	have_compress	<td>	YES
+<tr><td>	have_dynamic_loading	<td>	YES
+<tr><td>	have_geometry	<td>	YES
+<tr><td>	have_openssl	<td>	YES
+<tr><td>	have_profiling	<td>	YES
+<tr><td>	have_query_cache	<td>	NO
+<tr><td>	have_rtree_keys	<td>	YES
+<tr><td>	have_ssl	<td>	YES
+<tr><td>	have_statement_timeout	<td>	YES
+<tr><td>	have_symlink	<td>	DISABLED
+<tr><td>	histogram_generation_max_mem_size	<td>	20000000
+<tr><td>	host_cache_size	<td>	279
+<tr><td>	hostname	<td>	DESKTOP-9S42RE7
+<tr><td>	information_schema_stats_expiry	<td>	86400
+<tr><td>	init_connect	<td>	
+<tr><td>	init_file	<td>	
+<tr><td>	init_replica	<td>	
+<tr><td>	init_slave	<td>	
+<tr><td>	innodb_adaptive_flushing	<td>	ON
+<tr><td>	innodb_adaptive_flushing_lwm	<td>	10
+<tr><td>	innodb_adaptive_hash_index	<td>	ON
+<tr><td>	innodb_adaptive_hash_index_parts	<td>	8
+<tr><td>	innodb_adaptive_max_sleep_delay	<td>	150000
+<tr><td>	innodb_api_bk_commit_interval	<td>	5
+<tr><td>	innodb_api_disable_rowlock	<td>	OFF
+<tr><td>	innodb_api_enable_binlog	<td>	OFF
+<tr><td>	innodb_api_enable_mdl	<td>	OFF
+<tr><td>	innodb_api_trx_level	<td>	0
+<tr><td>	innodb_autoextend_increment	<td>	64
+<tr><td>	innodb_autoinc_lock_mode	<td>	2
+<tr><td>	innodb_buffer_pool_chunk_size	<td>	8388608
+<tr><td>	innodb_buffer_pool_dump_at_shutdown	<td>	ON
+<tr><td>	innodb_buffer_pool_dump_now	<td>	OFF
+<tr><td>	innodb_buffer_pool_dump_pct	<td>	25
+<tr><td>	innodb_buffer_pool_filename	<td>	ib_buffer_pool
+<tr><td>	innodb_buffer_pool_in_core_file	<td>	ON
+<tr><td>	innodb_buffer_pool_instances	<td>	1
+<tr><td>	innodb_buffer_pool_load_abort	<td>	OFF
+<tr><td>	innodb_buffer_pool_load_at_startup	<td>	ON
+<tr><td>	innodb_buffer_pool_load_now	<td>	OFF
+<tr><td>	innodb_buffer_pool_size	<td>	8388608
+<tr><td>	innodb_change_buffer_max_size	<td>	25
+<tr><td>	innodb_change_buffering	<td>	all
+<tr><td>	innodb_checksum_algorithm	<td>	crc32
+<tr><td>	innodb_cmp_per_index_enabled	<td>	OFF
+<tr><td>	innodb_commit_concurrency	<td>	0
+<tr><td>	innodb_compression_failure_threshold_pct	<td>	5
+<tr><td>	innodb_compression_level	<td>	6
+<tr><td>	innodb_compression_pad_pct_max	<td>	50
+<tr><td>	innodb_concurrency_tickets	<td>	5000
+<tr><td>	innodb_data_file_path	<td>	ibdata1:12M:autoextend
+<tr><td>	innodb_data_home_dir	<td>	
+<tr><td>	innodb_deadlock_detect	<td>	ON
+<tr><td>	innodb_dedicated_server	<td>	OFF
+<tr><td>	innodb_default_row_format	<td>	dynamic
+<tr><td>	innodb_directories	<td>	
+<tr><td>	innodb_disable_sort_file_cache	<td>	OFF
+<tr><td>	innodb_doublewrite	<td>	ON
+<tr><td>	innodb_doublewrite_batch_size	<td>	0
+<tr><td>	innodb_doublewrite_dir	<td>	
+<tr><td>	innodb_doublewrite_files	<td>	2
+<tr><td>	innodb_doublewrite_pages	<td>	4
+<tr><td>	innodb_extend_and_initialize	<td>	ON
+<tr><td>	innodb_fast_shutdown	<td>	1
+<tr><td>	innodb_file_per_table	<td>	ON
+<tr><td>	innodb_fill_factor	<td>	100
+<tr><td>	innodb_flush_log_at_timeout	<td>	1
+<tr><td>	innodb_flush_log_at_trx_commit	<td>	1
+<tr><td>	innodb_flush_method	<td>	unbuffered
+<tr><td>	innodb_flush_neighbors	<td>	0
+<tr><td>	innodb_flush_sync	<td>	ON
+<tr><td>	innodb_flushing_avg_loops	<td>	30
+<tr><td>	innodb_force_load_corrupted	<td>	OFF
+<tr><td>	innodb_force_recovery	<td>	0
+<tr><td>	innodb_fsync_threshold	<td>	0
+<tr><td>	innodb_ft_aux_table	<td>	
+<tr><td>	innodb_ft_cache_size	<td>	8000000
+<tr><td>	innodb_ft_enable_diag_print	<td>	OFF
+<tr><td>	innodb_ft_enable_stopword	<td>	ON
+<tr><td>	innodb_ft_max_token_size	<td>	84
+<tr><td>	innodb_ft_min_token_size	<td>	3
+<tr><td>	innodb_ft_num_word_optimize	<td>	2000
+<tr><td>	innodb_ft_result_cache_limit	<td>	2000000000
+<tr><td>	innodb_ft_server_stopword_table	<td>	
+<tr><td>	innodb_ft_sort_pll_degree	<td>	2
+<tr><td>	innodb_ft_total_cache_size	<td>	640000000
+<tr><td>	innodb_ft_user_stopword_table	<td>	
+<tr><td>	innodb_idle_flush_pct	<td>	100
+<tr><td>	innodb_io_capacity	<td>	200
+<tr><td>	innodb_io_capacity_max	<td>	2000
+<tr><td>	innodb_lock_wait_timeout	<td>	50
+<tr><td>	innodb_log_buffer_size	<td>	1048576
+<tr><td>	innodb_log_checksums	<td>	ON
+<tr><td>	innodb_log_compressed_pages	<td>	ON
+<tr><td>	innodb_log_file_size	<td>	50331648
+<tr><td>	innodb_log_files_in_group	<td>	2
+<tr><td>	innodb_log_group_home_dir	<td>	.\\
+<tr><td>	innodb_log_spin_cpu_abs_lwm	<td>	80
+<tr><td>	innodb_log_spin_cpu_pct_hwm	<td>	50
+<tr><td>	innodb_log_wait_for_flush_spin_hwm	<td>	400
+<tr><td>	innodb_log_write_ahead_size	<td>	8192
+<tr><td>	innodb_log_writer_threads	<td>	ON
+<tr><td>	innodb_lru_scan_depth	<td>	1024
+<tr><td>	innodb_max_dirty_pages_pct	<td>	90.000000
+<tr><td>	innodb_max_dirty_pages_pct_lwm	<td>	10.000000
+<tr><td>	innodb_max_purge_lag	<td>	0
+<tr><td>	innodb_max_purge_lag_delay	<td>	0
+<tr><td>	innodb_max_undo_log_size	<td>	1073741824
+<tr><td>	innodb_monitor_disable	<td>	
+<tr><td>	innodb_monitor_enable	<td>	
+<tr><td>	innodb_monitor_reset	<td>	
+<tr><td>	innodb_monitor_reset_all	<td>	
+<tr><td>	innodb_old_blocks_pct	<td>	37
+<tr><td>	innodb_old_blocks_time	<td>	1000
+<tr><td>	innodb_online_alter_log_max_size	<td>	134217728
+<tr><td>	innodb_open_files	<td>	300
+<tr><td>	innodb_optimize_fulltext_only	<td>	OFF
+<tr><td>	innodb_page_cleaners	<td>	1
+<tr><td>	innodb_page_size	<td>	16384
+<tr><td>	innodb_parallel_read_threads	<td>	4
+<tr><td>	innodb_print_all_deadlocks	<td>	OFF
+<tr><td>	innodb_print_ddl_logs	<td>	OFF
+<tr><td>	innodb_purge_batch_size	<td>	300
+<tr><td>	innodb_purge_rseg_truncate_frequency	<td>	128
+<tr><td>	innodb_purge_threads	<td>	4
+<tr><td>	innodb_random_read_ahead	<td>	OFF
+<tr><td>	innodb_read_ahead_threshold	<td>	56
+<tr><td>	innodb_read_io_threads	<td>	4
+<tr><td>	innodb_read_only	<td>	OFF
+<tr><td>	innodb_redo_log_archive_dirs	<td>	
+<tr><td>	innodb_redo_log_encrypt	<td>	OFF
+<tr><td>	innodb_replication_delay	<td>	0
+<tr><td>	innodb_rollback_on_timeout	<td>	OFF
+<tr><td>	innodb_rollback_segments	<td>	128
+<tr><td>	innodb_segment_reserve_factor	<td>	12.500000
+<tr><td>	innodb_sort_buffer_size	<td>	1048576
+<tr><td>	innodb_spin_wait_delay	<td>	6
+<tr><td>	innodb_spin_wait_pause_multiplier	<td>	50
+<tr><td>	innodb_stats_auto_recalc	<td>	ON
+<tr><td>	innodb_stats_include_delete_marked	<td>	OFF
+<tr><td>	innodb_stats_method	<td>	nulls_equal
+<tr><td>	innodb_stats_on_metadata	<td>	OFF
+<tr><td>	innodb_stats_persistent	<td>	ON
+<tr><td>	innodb_stats_persistent_sample_pages	<td>	20
+<tr><td>	innodb_stats_transient_sample_pages	<td>	8
+<tr><td>	innodb_status_output	<td>	OFF
+<tr><td>	innodb_status_output_locks	<td>	OFF
+<tr><td>	innodb_strict_mode	<td>	ON
+<tr><td>	innodb_sync_array_size	<td>	1
+<tr><td>	innodb_sync_spin_loops	<td>	30
+<tr><td>	innodb_table_locks	<td>	ON
+<tr><td>	innodb_temp_data_file_path	<td>	ibtmp1:12M:autoextend
+<tr><td>	innodb_temp_tablespaces_dir	<td>	.\\#innodb_temp\\
+<tr><td>	innodb_thread_concurrency	<td>	9
+<tr><td>	innodb_thread_sleep_delay	<td>	0
+<tr><td>	innodb_tmpdir	<td>	
+<tr><td>	innodb_undo_directory	<td>	.\\
+<tr><td>	innodb_undo_log_encrypt	<td>	OFF
+<tr><td>	innodb_undo_log_truncate	<td>	ON
+<tr><td>	innodb_undo_tablespaces	<td>	2
+<tr><td>	innodb_use_fdatasync	<td>	OFF
+<tr><td>	innodb_use_native_aio	<td>	ON
+<tr><td>	innodb_validate_tablespace_paths	<td>	ON
+<tr><td>	innodb_version	<td>	8.0.26
+<tr><td>	innodb_write_io_threads	<td>	4
+<tr><td>	interactive_timeout	<td>	28800
+<tr><td>	internal_tmp_mem_storage_engine	<td>	TempTable
+<tr><td>	join_buffer_size	<td>	262144
+<tr><td>	keep_files_on_create	<td>	OFF
+<tr><td>	key_buffer_size	<td>	8388608
+<tr><td>	key_cache_age_threshold	<td>	300
+<tr><td>	key_cache_block_size	<td>	1024
+<tr><td>	key_cache_division_limit	<td>	100
+<tr><td>	keyring_operations	<td>	ON
+<tr><td>	large_files_support	<td>	ON
+<tr><td>	large_page_size	<td>	0
+<tr><td>	large_pages	<td>	OFF
+<tr><td>	lc_messages	<td>	en_US
+<tr><td>	lc_messages_dir	<td>	C:\\Program Files\\MySQL\\MySQL Server 8.0\\share\\
+<tr><td>	lc_time_names	<td>	en_US
+<tr><td>	license	<td>	GPL
+<tr><td>	local_infile	<td>	OFF
+<tr><td>	lock_wait_timeout	<td>	31536000
+<tr><td>	log_bin	<td>	ON
+<tr><td>	log_bin_basename	<td>	C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Data\\DESKTOP-9S42RE7-bin
+<tr><td>	log_bin_index	<td>	C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Data\\DESKTOP-9S42RE7-bin.index
+<tr><td>	log_bin_trust_function_creators	<td>	OFF
+<tr><td>	log_bin_use_v1_row_events	<td>	OFF
+<tr><td>	log_error	<td>	.\\DESKTOP-9S42RE7.err
+<tr><td>	log_error_services	<td>	log_filter_internal; log_sink_internal
+<tr><td>	log_error_suppression_list	<td>	
+<tr><td>	log_error_verbosity	<td>	2
+<tr><td>	log_output	<td>	FILE
+<tr><td>	log_queries_not_using_indexes	<td>	OFF
+<tr><td>	log_raw	<td>	OFF
+<tr><td>	log_replica_updates	<td>	ON
+<tr><td>	log_slave_updates	<td>	ON
+<tr><td>	log_slow_admin_statements	<td>	OFF
+<tr><td>	log_slow_extra	<td>	OFF
+<tr><td>	log_slow_replica_statements	<td>	OFF
+<tr><td>	log_slow_slave_statements	<td>	OFF
+<tr><td>	log_statements_unsafe_for_binlog	<td>	ON
+<tr><td>	log_throttle_queries_not_using_indexes	<td>	0
+<tr><td>	log_timestamps	<td>	UTC
+<tr><td>	long_query_time	<td>	10.000000
+<tr><td>	low_priority_updates	<td>	OFF
+<tr><td>	lower_case_file_system	<td>	ON
+<tr><td>	lower_case_table_names	<td>	1
+<tr><td>	mandatory_roles	<td>	
+<tr><td>	master_info_repository	<td>	TABLE
+<tr><td>	master_verify_checksum	<td>	OFF
+<tr><td>	max_allowed_packet	<td>	4194304
+<tr><td>	max_binlog_cache_size	<td>	18446744073709547520
+<tr><td>	max_binlog_size	<td>	1073741824
+<tr><td>	max_binlog_stmt_cache_size	<td>	18446744073709547520
+<tr><td>	max_connect_errors	<td>	100
+<tr><td>	max_connections	<td>	151
+<tr><td>	max_delayed_threads	<td>	20
+<tr><td>	max_digest_length	<td>	1024
+<tr><td>	max_error_count	<td>	1024
+<tr><td>	max_execution_time	<td>	0
+<tr><td>	max_heap_table_size	<td>	16777216
+<tr><td>	max_insert_delayed_threads	<td>	20
+<tr><td>	max_join_size	<td>	18446744073709551615
+<tr><td>	max_length_for_sort_data	<td>	4096
+<tr><td>	max_points_in_geometry	<td>	65536
+<tr><td>	max_prepared_stmt_count	<td>	16382
+<tr><td>	max_relay_log_size	<td>	0
+<tr><td>	max_seeks_for_key	<td>	4294967295
+<tr><td>	max_sort_length	<td>	1024
+<tr><td>	max_sp_recursion_depth	<td>	0
+<tr><td>	max_user_connections	<td>	0
+<tr><td>	max_write_lock_count	<td>	4294967295
+<tr><td>	min_examined_row_limit	<td>	0
+<tr><td>	myisam_data_pointer_size	<td>	6
+<tr><td>	myisam_max_sort_file_size	<td>	107374182400
+<tr><td>	myisam_mmap_size	<td>	18446744073709551615
+<tr><td>	myisam_recover_options	<td>	OFF
+<tr><td>	myisam_repair_threads	<td>	1
+<tr><td>	myisam_sort_buffer_size	<td>	171966464
+<tr><td>	myisam_stats_method	<td>	nulls_unequal
+<tr><td>	myisam_use_mmap	<td>	OFF
+<tr><td>	mysql_native_password_proxy_users	<td>	OFF
+<tr><td>	mysqlx_bind_address	<td>	*
+<tr><td>	mysqlx_compression_algorithms	<td>	DEFLATE_STREAM, LZ4_MESSAGE, ZSTD_STREAM
+<tr><td>	mysqlx_connect_timeout	<td>	30
+<tr><td>	mysqlx_deflate_default_compression_level	<td>	3
+<tr><td>	mysqlx_deflate_max_client_compression_level	<td>	5
+<tr><td>	mysqlx_document_id_unique_prefix	<td>	0
+<tr><td>	mysqlx_enable_hello_notice	<td>	ON
+<tr><td>	mysqlx_idle_worker_thread_timeout	<td>	60
+<tr><td>	mysqlx_interactive_timeout	<td>	28800
+<tr><td>	mysqlx_lz4_default_compression_level	<td>	2
+<tr><td>	mysqlx_lz4_max_client_compression_level	<td>	8
+<tr><td>	mysqlx_max_allowed_packet	<td>	67108864
+<tr><td>	mysqlx_max_connections	<td>	100
+<tr><td>	mysqlx_min_worker_threads	<td>	2
+<tr><td>	mysqlx_port	<td>	33060
+<tr><td>	mysqlx_port_open_timeout	<td>	0
+<tr><td>	mysqlx_read_timeout	<td>	30
+<tr><td>	mysqlx_socket	<td>	/tmp/mysqlx.sock
+<tr><td>	mysqlx_ssl_ca	<td>	
+<tr><td>	mysqlx_ssl_capath	<td>	
+<tr><td>	mysqlx_ssl_cert	<td>	
+<tr><td>	mysqlx_ssl_cipher	<td>	
+<tr><td>	mysqlx_ssl_crl	<td>	
+<tr><td>	mysqlx_ssl_crlpath	<td>	
+<tr><td>	mysqlx_ssl_key	<td>	
+<tr><td>	mysqlx_wait_timeout	<td>	28800
+<tr><td>	mysqlx_write_timeout	<td>	60
+<tr><td>	mysqlx_zstd_default_compression_level	<td>	3
+<tr><td>	mysqlx_zstd_max_client_compression_level	<td>	11
+<tr><td>	named_pipe	<td>	OFF
+<tr><td>	named_pipe_full_access_group	<td>	
+<tr><td>	net_buffer_length	<td>	16384
+<tr><td>	net_read_timeout	<td>	30
+<tr><td>	net_retry_count	<td>	10
+<tr><td>	net_write_timeout	<td>	60
+<tr><td>	new	<td>	OFF
+<tr><td>	ngram_token_size	<td>	2
+<tr><td>	offline_mode	<td>	OFF
+<tr><td>	old	<td>	OFF
+<tr><td>	old_alter_table	<td>	OFF
+<tr><td>	open_files_limit	<td>	6209
+<tr><td>	optimizer_prune_level	<td>	1
+<tr><td>	optimizer_search_depth	<td>	62
+<tr><td>	optimizer_switch	<td>	index_merge=on, index_merge_union=on, index_merge_sort_union=on, index_merge_intersection=on, engine_condition_pushdown=
+<tr><td>	optimizer_trace	<td>	enabled=off, one_line=off
+<tr><td>	optimizer_trace_features	<td>	greedy_search=on, range_optimizer=on, dynamic_range=on, repeated_subselect=on
+<tr><td>	optimizer_trace_limit	<td>	1
+<tr><td>	optimizer_trace_max_mem_size	<td>	1048576
+<tr><td>	optimizer_trace_offset	<td>	-1
+<tr><td>	parser_max_mem_size	<td>	18446744073709551615
+<tr><td>	partial_revokes	<td>	OFF
+<tr><td>	password_history	<td>	0
+<tr><td>	password_require_current	<td>	OFF
+<tr><td>	password_reuse_interval	<td>	0
+<tr><td>	performance_schema	<td>	ON
+<tr><td>	performance_schema_accounts_size	<td>	-1
+<tr><td>	performance_schema_digests_size	<td>	10000
+<tr><td>	performance_schema_error_size	<td>	4946
+<tr><td>	performance_schema_events_stages_history_long_size	<td>	10000
+<tr><td>	performance_schema_events_stages_history_size	<td>	10
+<tr><td>	performance_schema_events_statements_history_long_size	<td>	10000
+<tr><td>	performance_schema_events_statements_history_size	<td>	10
+<tr><td>	performance_schema_events_transactions_history_long_size	<td>	10000
+<tr><td>	performance_schema_events_transactions_history_size	<td>	10
+<tr><td>	performance_schema_events_waits_history_long_size	<td>	10000
+<tr><td>	performance_schema_events_waits_history_size	<td>	10
+<tr><td>	performance_schema_hosts_size	<td>	-1
+<tr><td>	performance_schema_max_cond_classes	<td>	100
+<tr><td>	performance_schema_max_cond_instances	<td>	-1
+<tr><td>	performance_schema_max_digest_length	<td>	1024
+<tr><td>	performance_schema_max_digest_sample_age	<td>	60
+<tr><td>	performance_schema_max_file_classes	<td>	80
+<tr><td>	performance_schema_max_file_handles	<td>	32768
+<tr><td>	performance_schema_max_file_instances	<td>	-1
+<tr><td>	performance_schema_max_index_stat	<td>	-1
+<tr><td>	performance_schema_max_memory_classes	<td>	450
+<tr><td>	performance_schema_max_metadata_locks	<td>	-1
+<tr><td>	performance_schema_max_mutex_classes	<td>	300
+<tr><td>	performance_schema_max_mutex_instances	<td>	-1
+<tr><td>	performance_schema_max_prepared_statements_instances	<td>	-1
+<tr><td>	performance_schema_max_program_instances	<td>	-1
+<tr><td>	performance_schema_max_rwlock_classes	<td>	60
+<tr><td>	performance_schema_max_rwlock_instances	<td>	-1
+<tr><td>	performance_schema_max_socket_classes	<td>	10
+<tr><td>	performance_schema_max_socket_instances	<td>	-1
+<tr><td>	performance_schema_max_sql_text_length	<td>	1024
+<tr><td>	performance_schema_max_stage_classes	<td>	175
+<tr><td>	performance_schema_max_statement_classes	<td>	218
+<tr><td>	performance_schema_max_statement_stack	<td>	10
+<tr><td>	performance_schema_max_table_handles	<td>	-1
+<tr><td>	performance_schema_max_table_instances	<td>	-1
+<tr><td>	performance_schema_max_table_lock_stat	<td>	-1
+<tr><td>	performance_schema_max_thread_classes	<td>	100
+<tr><td>	performance_schema_max_thread_instances	<td>	-1
+<tr><td>	performance_schema_session_connect_attrs_size	<td>	512
+<tr><td>	performance_schema_setup_actors_size	<td>	-1
+<tr><td>	performance_schema_setup_objects_size	<td>	-1
+<tr><td>	performance_schema_show_processlist	<td>	OFF
+<tr><td>	performance_schema_users_size	<td>	-1
+<tr><td>	persist_only_admin_x509_subject	<td>	
+<tr><td>	persisted_globals_load	<td>	ON
+<tr><td>	pid_file	<td>	C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Data\\DESKTOP-9S42RE7.pid
+<tr><td>	plugin_dir	<td>	C:\\Program Files\\MySQL\\MySQL Server 8.0\\lib\\plugin\\
+<tr><td>	port	<td>	3306
+<tr><td>	preload_buffer_size	<td>	32768
+<tr><td>	print_identified_with_as_hex	<td>	OFF
+<tr><td>	profiling	<td>	OFF
+<tr><td>	profiling_history_size	<td>	15
+<tr><td>	protocol_compression_algorithms	<td>	zlib, zstd, uncompressed
+<tr><td>	protocol_version	<td>	10
+<tr><td>	query_alloc_block_size	<td>	8192
+<tr><td>	query_prealloc_size	<td>	8192
+<tr><td>	range_alloc_block_size	<td>	4096
+<tr><td>	range_optimizer_max_mem_size	<td>	8388608
+<tr><td>	rbr_exec_mode	<td>	STRICT
+<tr><td>	read_buffer_size	<td>	65536
+<tr><td>	read_only	<td>	OFF
+<tr><td>	read_rnd_buffer_size	<td>	262144
+<tr><td>	regexp_stack_limit	<td>	8000000
+<tr><td>	regexp_time_limit	<td>	32
+<tr><td>	relay_log	<td>	DESKTOP-9S42RE7-relay-bin
+<tr><td>	relay_log_basename	<td>	C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Data\\DESKTOP-9S42RE7-relay-bin
+<tr><td>	relay_log_index	<td>	C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Data\\DESKTOP-9S42RE7-relay-bin.index
+<tr><td>	relay_log_info_file	<td>	relay-log.info
+<tr><td>	relay_log_info_repository	<td>	TABLE
+<tr><td>	relay_log_purge	<td>	ON
+<tr><td>	relay_log_recovery	<td>	OFF
+<tr><td>	relay_log_space_limit	<td>	0
+<tr><td>	replica_allow_batching	<td>	OFF
+<tr><td>	replica_checkpoint_group	<td>	512
+<tr><td>	replica_checkpoint_period	<td>	300
+<tr><td>	replica_compressed_protocol	<td>	OFF
+<tr><td>	replica_exec_mode	<td>	STRICT
+<tr><td>	replica_load_tmpdir	<td>	C:\\Windows\\SERVIC~1\\NETWOR~1\\AppData\\Local\\Temp
+<tr><td>	replica_max_allowed_packet	<td>	1073741824
+<tr><td>	replica_net_timeout	<td>	60
+<tr><td>	replica_parallel_type	<td>	DATABASE
+<tr><td>	replica_parallel_workers	<td>	0
+<tr><td>	replica_pending_jobs_size_max	<td>	134217728
+<tr><td>	replica_preserve_commit_order	<td>	OFF
+<tr><td>	replica_skip_errors	<td>	OFF
+<tr><td>	replica_sql_verify_checksum	<td>	ON
+<tr><td>	replica_transaction_retries	<td>	10
+<tr><td>	replica_type_conversions	<td>	
+<tr><td>	replication_optimize_for_static_plugin_config	<td>	OFF
+<tr><td>	replication_sender_observe_commit_only	<td>	OFF
+<tr><td>	report_host	<td>	
+<tr><td>	report_password	<td>	
+<tr><td>	report_port	<td>	3306
+<tr><td>	report_user	<td>	
+<tr><td>	require_secure_transport	<td>	OFF
+<tr><td>	rpl_read_size	<td>	8192
+<tr><td>	rpl_stop_replica_timeout	<td>	31536000
+<tr><td>	rpl_stop_slave_timeout	<td>	31536000
+<tr><td>	schema_definition_cache	<td>	256
+<tr><td>	secondary_engine_cost_threshold	<td>	100000.000000
+<tr><td>	secure_file_priv	<td>	C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\
+<tr><td>	select_into_buffer_size	<td>	131072
+<tr><td>	select_into_disk_sync	<td>	OFF
+<tr><td>	select_into_disk_sync_delay	<td>	0
+<tr><td>	server_id	<td>	1
+<tr><td>	server_id_bits	<td>	32
+<tr><td>	server_uuid	<td>	3fee2058-07de-11ec-bab6-107b44948c1d
+<tr><td>	session_track_gtids	<td>	OFF
+<tr><td>	session_track_schema	<td>	ON
+<tr><td>	session_track_state_change	<td>	OFF
+<tr><td>	session_track_system_variables	<td>	time_zone, autocommit, character_set_client, character_set_results, character_set_connection
+<tr><td>	session_track_transaction_info	<td>	OFF
+<tr><td>	sha256_password_auto_generate_rsa_keys	<td>	ON
+<tr><td>	sha256_password_private_key_path	<td>	private_key.pem
+<tr><td>	sha256_password_proxy_users	<td>	OFF
+<tr><td>	sha256_password_public_key_path	<td>	public_key.pem
+<tr><td>	shared_memory	<td>	OFF
+<tr><td>	shared_memory_base_name	<td>	MYSQL
+<tr><td>	show_create_table_verbosity	<td>	OFF
+<tr><td>	show_old_temporals	<td>	OFF
+<tr><td>	skip_external_locking	<td>	ON
+<tr><td>	skip_name_resolve	<td>	OFF
+<tr><td>	skip_networking	<td>	OFF
+<tr><td>	skip_replica_start	<td>	OFF
+<tr><td>	skip_show_database	<td>	OFF
+<tr><td>	skip_slave_start	<td>	OFF
+<tr><td>	slave_allow_batching	<td>	OFF
+<tr><td>	slave_checkpoint_group	<td>	512
+<tr><td>	slave_checkpoint_period	<td>	300
+<tr><td>	slave_compressed_protocol	<td>	OFF
+<tr><td>	slave_exec_mode	<td>	STRICT
+<tr><td>	slave_load_tmpdir	<td>	C:\\Windows\\SERVIC~1\\NETWOR~1\\AppData\\Local\\Temp
+<tr><td>	slave_max_allowed_packet	<td>	1073741824
+<tr><td>	slave_net_timeout	<td>	60
+<tr><td>	slave_parallel_type	<td>	DATABASE
+<tr><td>	slave_parallel_workers	<td>	0
+<tr><td>	slave_pending_jobs_size_max	<td>	134217728
+<tr><td>	slave_preserve_commit_order	<td>	OFF
+<tr><td>	slave_rows_search_algorithms	<td>	INDEX_SCAN, HASH_SCAN
+<tr><td>	slave_skip_errors	<td>	OFF
+<tr><td>	slave_sql_verify_checksum	<td>	ON
+<tr><td>	slave_transaction_retries	<td>	10
+<tr><td>	slave_type_conversions	<td>	
+<tr><td>	slow_launch_time	<td>	2
+<tr><td>	slow_query_log	<td>	ON
+<tr><td>	slow_query_log_file	<td>	DESKTOP-9S42RE7-slow.log
+<tr><td>	socket	<td>	MySQL
+<tr><td>	sort_buffer_size	<td>	262144
+<tr><td>	source_verify_checksum	<td>	OFF
+<tr><td>	sql_auto_is_null	<td>	OFF
+<tr><td>	sql_big_selects	<td>	ON
+<tr><td>	sql_buffer_result	<td>	OFF
+<tr><td>	sql_log_off	<td>	OFF
+<tr><td>	sql_mode	<td>	STRICT_TRANS_TABLES, NO_ENGINE_SUBSTITUTION
+<tr><td>	sql_notes	<td>	ON
+<tr><td>	sql_quote_show_create	<td>	ON
+<tr><td>	sql_replica_skip_counter	<td>	0
+<tr><td>	sql_require_primary_key	<td>	OFF
+<tr><td>	sql_safe_updates	<td>	OFF
+<tr><td>	sql_select_limit	<td>	18446744073709551615
+<tr><td>	sql_slave_skip_counter	<td>	0
+<tr><td>	sql_warnings	<td>	OFF
+<tr><td>	ssl_ca	<td>	ca.pem
+<tr><td>	ssl_capath	<td>	
+<tr><td>	ssl_cert	<td>	server-cert.pem
+<tr><td>	ssl_cipher	<td>	
+<tr><td>	ssl_crl	<td>	
+<tr><td>	ssl_crlpath	<td>	
+<tr><td>	ssl_fips_mode	<td>	OFF
+<tr><td>	ssl_key	<td>	server-key.pem
+<tr><td>	stored_program_cache	<td>	256
+<tr><td>	stored_program_definition_cache	<td>	256
+<tr><td>	super_read_only	<td>	OFF
+<tr><td>	sync_binlog	<td>	1
+<tr><td>	sync_master_info	<td>	10000
+<tr><td>	sync_relay_log	<td>	10000
+<tr><td>	sync_relay_log_info	<td>	10000
+<tr><td>	sync_source_info	<td>	10000
+<tr><td>	system_time_zone	<td>	Malay Peninsula Standard Time
+<tr><td>	table_definition_cache	<td>	1400
+<tr><td>	table_encryption_privilege_check	<td>	OFF
+<tr><td>	table_open_cache	<td>	2000
+<tr><td>	table_open_cache_instances	<td>	16
+<tr><td>	tablespace_definition_cache	<td>	256
+<tr><td>	temptable_max_mmap	<td>	1073741824
+<tr><td>	temptable_max_ram	<td>	1073741824
+<tr><td>	temptable_use_mmap	<td>	ON
+<tr><td>	terminology_use_previous	<td>	NONE
+<tr><td>	thread_cache_size	<td>	10
+<tr><td>	thread_handling	<td>	one-thread-per-connection
+<tr><td>	thread_stack	<td>	286720
+<tr><td>	time_zone	<td>	SYSTEM
+<tr><td>	tls_ciphersuites	<td>	
+<tr><td>	tls_version	<td>	TLSv1, TLSv1.1, TLSv1.2, TLSv1.3
+<tr><td>	tmp_table_size	<td>	91226112
+<tr><td>	tmpdir	<td>	C:\\Windows\\SERVIC~1\\NETWOR~1\\AppData\\Local\\Temp
+<tr><td>	transaction_alloc_block_size	<td>	8192
+<tr><td>	transaction_isolation	<td>	REPEATABLE-READ
+<tr><td>	transaction_prealloc_size	<td>	4096
+<tr><td>	transaction_read_only	<td>	OFF
+<tr><td>	transaction_write_set_extraction	<td>	XXHASH64
+<tr><td>	unique_checks	<td>	ON
+<tr><td>	updatable_views_with_limit	<td>	YES
+<tr><td>	version	<td>	8.0.26
+<tr><td>	version_comment	<td>	MySQL Community Server - GPL
+<tr><td>	version_compile_machine	<td>	x86_64
+<tr><td>	version_compile_os	<td>	Win64
+<tr><td>	version_compile_zlib	<td>	1.2.11
+<tr><td>	wait_timeout	<td>	28800
+<tr><td>	windowing_use_high_precision	<td>	ON
+</table><p>
+<hr><P><A NAME="xgdpr"></A><h2>GDPR Cross Reference</h2>
+<P><table border="2"><tr><td style="text-align: center;"><b><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679">GDPR Article </a></b>
+<td width="40%"><b>Title</b>	<td><b>Checks</b>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e1888-1-1">6<td>Lawfulness of processing<td>
+<a href="#dp2">Tablespace encryption</a>, <a href="#dp2a">Encryption enabled</a>, <a href="#dp2c">Suspect sensitive tables</a>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e2001-1-1">7<td>Conditions for consent<td>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e2599-1-1">16<td>Right to rectification<td>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e2606-1-1">17<td>Right to erasure (‘right to be forgotten’)<td>
+<a href="#dp5c">Backup policies</a>, <a href="#dp5d">Binlog retention</a>, <a href="#sx2e">System backup</a>,</a>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e2700-1-1">18<td>Right to restriction of processing<td>
+<a href="#ac1">Separation of Roles</a>, 
+<a href="#dp7">Data Masking</a>, <a href="#dp7a">miXen package</a>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e2753-1-1">20<td>Right to data portability<td>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e3063-1-1">25<td>Data protection by design and by default<td>
+<a href="#ac2">Application user credential protection</a>, <a href="#ac7a">Password expire</a>, <a href="#dp1">Application encryption</a>, 
+<a href="#sc2p">Password policy</a>, <a href="#sy2c">Security Flags</a>,
+<a href="#ac1">Separation of Roles</a>, 
+<a href="#dp7">Data Masking</a>, <a href="#dp7a">miXen package</a>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e3258-1-1">29<td>Processing under the authority of the controller or processor<td>
+<a href="#ac1">Separation of Roles</a>, 
+<a href="#dp7">Data Masking</a>, <a href="#dp7a">miXen package</a>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e3265-1-1">30<td>Records of processing activities<td>
+<a href="#lg4">Event management</a>, <a href="#lg4a">Log Management</a>, <a href="#lg5"> Auditing</a>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e3383-1-1">32<td>Security of processing<td>
+<a href="#sc">Secure configuration</a>,
+<a href="#sc2c">DB Password check</a>,
+<a href="#sc2q">Performance statistics</a>,
+<a href="#h4">Monitoring and Audit</a>, <a href="#lg1a">Suspect SQL</a>, <a href="#lg2">Logging</a>,
+<a href="#sc2f">IDS</a>,
+<a href="#lg5">Auditing</a>, <a href="#dp4">Network encryption</a>, <a href="#dp4a">SSL/TLS configured</a>,
+<a href="#dp4b">Users required to use encryption</a>, <a href="#dp5">DB Backup execution</a>, <a href="#sx2e">System backup</a>,
+<a href="#dp2">Tablespace encryption</a>, <a href="#dp2a">Encryption enabled</a>, <a href="#dp2c">Suspect sensitive tables</a>,
+<a href="#ac1">Separation of Roles</a>,
+<a href="#dp7">Data Masking</a>, <a href="#dp7a">miXen package</a>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e3434-1-1">33<td>Notification of a personal data breach to the supervisory authority<td>
+<a href="#lg4a">Log Management</a>, <a href="#lg5"> Auditing</a>,
+<a href="#sc2f">IDS</a>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e3490-1-1">34<td>Communication of a personal data breach to the data subject<td>
+<a href="#dp2">Tablespace encryption</a>, <a href="#dp2a">Encryption enabled</a>, <a href="#dp2c">Suspect sensitive tables</a>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e3546-1-1">35<td>Data protection impact assessment<td>
+<a href="#dp2c">Suspect sensitive tables</a>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e6494-1-1">89<td>Safeguards and derogations relating to processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes<td>
+<a href="#ac1">Separation of Roles</a>, 
+<a href="#dp7">Data Masking</a>, <a href="#dp7a">miXen package</a>
+<tr><td style="text-align: center;"><a href="http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679#d1e6719-1-1">99<td>Entry into force and application<td>
+<a href="#gdpr1">GDPR Countdown</a>, <a href="#gdpr1a">Days since promulgation</a>, <a href="#gdpr1b">Days since application</a>
+</table><p>
+<P><A NAME="xcis"></A><h2>CIS Benchmarks Cross Reference</h2>
+<P><table border="2"><tr><td style="text-align: center;"><b><a href="https://www.cisecurity.org/cis-benchmarks/">CIS Recommentations</a><br>for MySQL (for 5.7 only)</b>
+<td><b>Title</b>	<td><b>Checks</b>
+<tr><td style="text-align: center;">1.1<td>Place Databases on Non-System Partitions<td>
+<a href="#sc2h">Dedicated datadir</a>
+<tr><td style="text-align: center;">2.1.1 <td>Backup policy in place<td>
+<a href="#dp5a">DB Backup execution</a>,
+<a href="#dp5c">Backup policies</a>
+<tr><td style="text-align: center;">2.1.4 <td>The backups should be properly secured<td>
+<a href="#dp5b">Backup encryption</a>
+<tr><td style="text-align: center;">2.6 <td>Set a Password Expiry Policy for Specific Users<td>
+<a href="#ac7a">Password expire</a>
+<tr><td style="text-align: center;">4.1 <td>Ensure Latest Security Patches Are Applied<td>
+<a href="#sc3a">MySQL update</a>
+<tr><td style="text-align: center;">4.2 <td>Ensure the test Database Is Not Installed<td>
+<a href="#sc2d2">Test schema</a>
+<tr><td style="text-align: center;">4.4 <td>Ensure local_infile Is Disabled<td>
+<a href="#sc2r">local_infile</a>
+<tr><td style="text-align: center;">4.6 <td>Ensure --skip-symbolic-links Is Enabled<td>
+<a href="#sc2s">Symbolic Links</a>
+<tr><td style="text-align: center;">4.7 <td>Ensure the daemon_memcached Plugin Is Disabled<td>
+<a href="#sc2i">Memcache plugin</a>
+<tr><td style="text-align: center;">4.8 <td>Ensure secure_file_priv Is Not Empty<td>
+<a href="#sc2l">secure_file_priv</a>
+<tr><td style="text-align: center;">4.9 <td>Ensure sql_mode Contains STRICT_ALL_TABLES<td>
+<a href="#lg1b">Strict SQL mode</a>
+<tr><td style="text-align: center;">5.1 <td>Ensure Only Administrative Users Have Full Database Access<td>
+<a href="#usr">Users</a>
+<tr><td style="text-align: center;">5.2 <td>Ensure file_priv Is Not Set to Y for Non-Administrative Users<td>
+<a href="#sc2e">Admin or Oper users &lt;&gt;root</a>,
+<a href="#usr">Users</a>
+<tr><td style="text-align: center;">5.3 <td>Ensure process_priv Is Not Set to Y for Non-Administrative Users<td>
+<a href="#usr">Users</a>
+<tr><td style="text-align: center;">5.4 <td>Ensure super_priv Is Not Set to Y for Non-Administrative Users<td>
+<a href="#sc2e">Admin or Oper users &lt;&gt;root</a>,
+<a href="#usr">Users</a>
+<tr><td style="text-align: center;">5.5 <td>Ensure shutdown_priv Is Not Set to Y for Non-Administrative Users<td>
+<a href="#usr">Users</a>
+<tr><td style="text-align: center;">5.6 <td>Ensure create_user_priv Is Not Set to Y for Non-Administrative Users<td>
+<a href="#usr">Users</a>
+<tr><td style="text-align: center;">5.7 <td>Ensure grant_priv Is Not Set to Y for Non-Administrative Users<td>
+<a href="#usr">Users</a>
+<tr><td style="text-align: center;">5.8 <td>Ensure repl_slave_priv Is Not Set to Y for Non-Administrative Users<td>
+<a href="#usr">Users</a>
+<tr><td style="text-align: center;">5.9 <td>Ensure DML/DDL Grants Are Limited to Specific Databases and Users<td>
+<a href="#ac1e">CRUD users</a>,
+<a href="#sc2e">Admin or Oper users &lt;&gt;root</a>,
+<a href="#usr">Users</a>
+<tr><td style="text-align: center;">6.1 <td>Ensure log_error Is Not Empty<td>
+<a href="#lg2c">Error Log</a>
+<tr><td style="text-align: center;">6.2 <td>Ensure Log Files Are Stored on a Non-System Partition<td>
+<a href="#lg2d">Binlog Path</a>
+<tr><td style="text-align: center;">6.3 <td>Ensure log_error_verbosity Is Not Set to 1<td>
+<a href="#lg2e">Error Level</a>
+<tr><td style="text-align: center;">6.4 <td>Ensure Audit Logging Is Enabled<td>
+<a href="#lg5a">Auditing active</a>,
+<a href="#lg5b">Auditing event configuration</a>,
+<a href="#lg5c">Auditing users whitelist</a>
+<tr><td style="text-align: center;">7.2 <td>Ensure sql_mode Contains NO_AUTO_CREATE_USER<td>
+<a href="#sc2n">Automatic User Creation</a>
+<tr><td style="text-align: center;">7.3 <td>Ensure Passwords Are Set for All MySQL Accounts<td>
+<a href="#sc2c">DB Password check</a>
+<tr><td style="text-align: center;">7.4 <td>Ensure default_password_lifetime Is Less Than Or Equal To 90<td>
+<a href="#ac7a">Password expire</a>
+<tr><td style="text-align: center;">7.5 <td>Ensure Password Complexity Is in Place<td>
+<a href="#sc2o">Password lenght</a>,
+<a href="#sc2p">Password policy</a>
+<tr><td style="text-align: center;">7.6 <td>Ensure No Users Have Wildcard Hostnames<td>
+<a href="#sc2b">Any host access</a>
+<tr><td style="text-align: center;">7.7 <td>Ensure No Anonymous Accounts Exist<td>
+<a href="#sc2a">Anonymous user</a>
+<tr><td style="text-align: center;">8.1 <td>Ensure have_ssl Is Set to YES<td>
+<a href="#dp4a">SSL/TLS configured</a>
+<tr><td style="text-align: center;">8.2 <td>Ensure ssl_type Is Set to ANY, X509, or SPECIFIED for All Remote Users<td>
+<a href="#dp4b">Users required to use encryption</a>
+<tr><td style="text-align: center;">9.2 <td>Ensure MASTER_SSL_VERIFY_SERVER_CERT Is Set to YES or 1<td>
+<a href="#sc2t">Verify Master certificate</a>
+<tr><td style="text-align: center;">9.3 <td>Ensure master_info_repository Is Set to TABLE<td>
+<a href="#sc2m">Master Info</a>
+<tr><td style="text-align: center;">9.4 <td>Ensure super_priv Is Not Set to Y for Replication Users<td>
+<a href="#sc2e">Admin or Oper users &lt;&gt;root</a>,
+<a href="#usr">Users</a>
+<tr><td style="text-align: center;">9.5 <td>Ensure No Replication Users Have Wildcard Hostnames<td>
+<a href="#usr">Users</a>
+</table><p>
+<P><A NAME="xcve"></A><h2>CVE</h2>
+<P><table border="2"><tr><td style="text-align: center;"><b><a href="https://www.cvedetails.com/vulnerability-list.php?vendor_id=93&product_id=21801&order=3">CVE Details</a><td>for MySQL 8.0</b>
+<tr><td><b>Version</b>	<td><b>CVE</b>	<td><b>Score</b>
+<tr><td>8.0.26	<td><b><a href="#sc3">Detected version</a></b>	<td>
+<tr><td>8.0.11<!---->	<td>CVE-2018-3064	<td style="text-align: right;"> 5.5
+<tr><td>8.0.11<!---->	<td>CVE-2018-3060	<td style="text-align: right;"> 5.5
+<tr><td>8.0.01<!---->	<td>CVE-2016-6663	<td style="text-align: right;"> 4.4
+</table><p>
+<hr><p>
+<br>The MIT License
+<br>Copyright &copy; 2017-2018 XeniaLAB srl http://www.xenialab.it
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
+ to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+<br>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+<p><b>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</b><p><br>
+<hr><P>Statistics generated on: 	2021-08-28 17:56:12
+<p>For more information or suggestions on MySAT contact
+<A HREF="mailto:mail@info.xenialab.it?subject=MySAT">XeniaLAB</A>.<hr><p></body></html>
+mysql> exit

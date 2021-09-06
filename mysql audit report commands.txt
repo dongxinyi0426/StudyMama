@@ -1,0 +1,4 @@
+mysql --user=root -p<Password> --skip-column-names -f --silent
+
+\t MySAT.htm
+\. mysat.80.sql
