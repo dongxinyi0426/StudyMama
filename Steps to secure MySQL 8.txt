@@ -92,3 +92,62 @@ SET DEFAULT ROLE ALL TO
 	
 	REVOKE INSERT, UPDATE, DELETE ON studymama.* FROM 'app_write';
 
+11. Set Password Expiration Policy
+
+SET PERSIST default_password_lifetime = 180; (6 months)
+
+	- 90 days
+	ALTER USER 'dev_dannel'@'localhost' PASSWORD EXPIRE INTERVAL 90 DAY;
+	- Never
+	ALTER USER 'dev_dannel'@'localhost' PASSWORD EXPIRE NEVER;
+	
+12. Set Password Reuse Policy - Prohibit reusing any of the last 6 passwords or passwords newer than 365 days
+
+SET PERSIST password_history = 6;
+SET PERSIST password_reuse_interval = 365;
+
+	- Combination - if needed
+
+CREATE USER 'dev_dannel'@'localhost'
+  PASSWORD HISTORY 5
+  PASSWORD REUSE INTERVAL 365 DAY;
+ALTER USER 'dev_dannel'@'localhost'
+  PASSWORD HISTORY 5
+  PASSWORD REUSE INTERVAL 365 DAY;
+  
+  	- Global
+  	
+CREATE USER 'dev_dannel'@'localhost'
+  PASSWORD HISTORY DEFAULT
+  PASSWORD REUSE INTERVAL DEFAULT;
+ALTER USER 'dev_dannel'@'localhost'
+  PASSWORD HISTORY DEFAULT
+  PASSWORD REUSE INTERVAL DEFAULT;
+  
+13. Set Password Verification-Required Policy
+
+SET PERSIST password_require_current = ON;
+
+14. Set Failed-Login Tracking and Temporary Account Locking
+
+ALTER USER 'dev_aung'@'localhost' 
+FAILED_LOGIN_ATTEMPTS 3 PASSWORD_LOCK_TIME UNBOUNDED;
+ALTER USER 'dev_liye'@'localhost'
+FAILED_LOGIN_ATTEMPTS 3 PASSWORD_LOCK_TIME UNBOUNDED;
+ALTER USER 'dev_xinyi'@'localhost'
+FAILED_LOGIN_ATTEMPTS 3 PASSWORD_LOCK_TIME UNBOUNDED;
+ALTER USER 'dev_dannel'@'localhost'
+FAILED_LOGIN_ATTEMPTS 3 PASSWORD_LOCK_TIME UNBOUNDED;
+ALTER USER 'read_only'@'localhost'
+FAILED_LOGIN_ATTEMPTS 3 PASSWORD_LOCK_TIME UNBOUNDED;
+ALTER USER 'rw_only'@'localhost'
+FAILED_LOGIN_ATTEMPTS 3 PASSWORD_LOCK_TIME UNBOUNDED;
+
+15. Set Log Error Level
+
+log_error_verbosity Value 	Permitted Message Priorities
+1 	ERROR
+2 	ERROR, WARNING
+3 	ERROR, WARNING, INFORMATION
+
+SET GLOBAL log_error_verbosity=3;
