@@ -385,8 +385,10 @@ select if(count(*)=0, '<td class="pass">Pass', '<td class="med">Fail<td>Test sch
 select '<tr><td><a name="sc2e"></a>Admin users <>root' ; 
 select if(count(*)=0, '<td class="pass">Pass', '<td class="eval">Evaluate<td><td> ')
   from mysql.user
- where user<>'root' and user<>'mysql.session'
-   and super_priv='Y';
+ where user<>'mysql.session'
+ and user<>'root'
+ and user<>'studymama'
+ and super_priv='Y';
 select concat(user,'@',host)
   from mysql.user
  where user<>'root' and user<>'mysql.session'
@@ -466,7 +468,7 @@ select if(count(*)=1, '<td class="pass">Pass', '<td class="low">Fail<td>On file'
    and variable_value = 'TABLE';
 select '<tr><td><a name="sc2n"></a>Automatic User Creation' ;
 select '<td class="pass">Pass<td>Always disabled in 8.0';
-select '<tr><td><a name="sc2o"></a>Password lenght' ;
+select '<tr><td><a name="sc2o"></a>Password length' ;
 select if(max(variable_value)>=8, '<td class="pass">Pass<td>', '<td class="med">Fail<td>Too short<td>'), 
        max(variable_value)
   from performance_schema.global_variables
