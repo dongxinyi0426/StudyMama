@@ -26,3 +26,69 @@ DROP SCHEMA sakila;
 5. Drop default sample 'world' database
 
 DROP SCHEMA world;
+
+6. Create database
+
+CREATE SCHEMA `studymama` ;
+
+7. Separation of duties
+
+	- Create roles as names for the required privilege sets:
+
+CREATE ROLE 'app_developer', 'app_read', 'app_write';
+
+	- Assign privileges to the roles:
+
+GRANT ALL ON studymama.* TO 'app_developer';
+GRANT SELECT ON studymama.* TO 'app_read';
+GRANT INSERT, UPDATE, DELETE ON studymama.* TO 'app_write';
+
+	- Create developer accounts, one user account that need read-only access, and one user account that needs read/write access
+	
+CREATE USER 'dev_aung'@'localhost' IDENTIFIED BY 'dev_1_aung_P@$$';
+CREATE USER 'dev_liye'@'localhost' IDENTIFIED BY 'dev_2_liye_P@$$';
+CREATE USER 'dev_xinyi'@'localhost' IDENTIFIED BY 'dev_3_xinyi_P@$$';
+CREATE USER 'dev_dannel'@'localhost' IDENTIFIED BY 'dev_4_dannel_P@$$';
+CREATE USER 'read_only'@'localhost' IDENTIFIED BY 'read_only_1_P@$$';
+CREATE USER 'rw_only'@'localhost' IDENTIFIED BY 'rw_only_1_P@$$';
+	
+	
+	- Assign each user account its required privileges
+	
+GRANT 'app_developer' TO 'dev_aung'@'localhost', 'dev_liye'@'localhost', 'dev_xinyi'@'localhost', 'dev_dannel'@'localhost';
+GRANT 'app_read' TO 'read_only'@'localhost';
+GRANT 'app_read', 'app_write' TO 'rw_only'@'localhost';
+	
+	
+8. Checking Role Privileges
+
+SHOW GRANTS FOR 'dev_aung'@'localhost' USING 'app_developer';
+SHOW GRANTS FOR 'dev_liye'@'localhost' USING 'app_developer';
+SHOW GRANTS FOR 'dev_xinyi'@'localhost' USING 'app_developer';
+SHOW GRANTS FOR 'dev_dannel'@'localhost' USING 'app_developer';
+SHOW GRANTS FOR 'read_only'@'localhost' USING 'app_read';
+SHOW GRANTS FOR 'rw_only'@'localhost' USING 'app_read', 'app_write';
+
+
+9. Set the default to all assigned roles for each account created
+
+SET DEFAULT ROLE ALL TO
+  'dev_aung'@'localhost',
+  'dev_liye'@'localhost',
+  'dev_xinyi'@'localhost',
+  'dev_dannel'@'localhost',
+  'read_only'@'localhost',
+  'rw_only'@'localhost';
+
+
+10. If needed, revoke/drop
+
+	- Role:
+	
+	REVOKE 'app_developer' FROM 'dev_dannel'@'localhost';
+	DROP ROLE 'app_read', 'app_write';
+	
+	- Privileges:
+	
+	REVOKE INSERT, UPDATE, DELETE ON studymama.* FROM 'app_write';
+

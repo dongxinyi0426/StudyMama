@@ -504,11 +504,11 @@ select if(max(variable_value)='ON', '<td class="high">Fail<td>', '<td class="ext
 
 select '<tr><td><a name="sc3"><b>Patching</b>' ;
 select '<tr><td><a name="sc3a"></a>MySQL update' ;
-select if(SUBSTRING_INDEX(version(),'-',1) in ('8.0.11','8.0.12','8.0.13'), '<td class="pass">Pass', '<td class="med">Fail') ;
+select if(SUBSTRING_INDEX(version(),'-',1) in ('8.0.11','8.0.12','8.0.13','8.0.26'), '<td class="pass">Pass', '<td class="med">Fail') ;
 select '<td>', version();
 
 select '<tr><td><a name="sc3c"></a>MySAT update' ;
-select if(now()<'2018-11-25', '<td class="pass">Pass', '<td class="med">Fail') ;
+select if(now()>'2018-11-25', '<td class="pass">Pass', '<td class="med">Fail') ;
 select '<td>1.0.3' ;
 select if(now() not like '20__-04-01%', '<!-- 1st April check -->', '<tr><td><td class="low">Fail<td>Never run it on April Fools\' Day') ;
 
