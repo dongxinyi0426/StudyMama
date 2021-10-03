@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -46,6 +48,12 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
+	
+	//configuration for maximum sessions
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
 
 	@Bean
 	@Override
@@ -69,7 +77,12 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				// make sure we use stateless session; session won't be used to
 				// store user's state.
 
-				sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				//sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				sessionManagement()
+				//.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.maximumSessions(1).maxSessionsPreventsLogin(true)
+				.sessionRegistry(sessionRegistry()).
+				and().invalidSessionUrl("/login");
 		httpSecurity.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

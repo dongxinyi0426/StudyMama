@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import sg.com.studymama.util.Encryption;
+
 import sg.com.studymama.DTO.UserDTO;
 import sg.com.studymama.exceptions.UserAlreadyExistAuthenticationException;
 import sg.com.studymama.exceptions.UserRoleException;
@@ -35,8 +37,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Autowired
 	private UserProfileRepository userProfileDao;
 
-	@Autowired
-	private PasswordEncoder bcryptEncoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -56,7 +56,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		if (userDao.findByUsername(user.getUsername()) == null) {
 			DAOUser newUser = new DAOUser();
 			newUser.setUsername(user.getUsername());
-			newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+			newUser.setPassword(Encryption.generateHashValue(user.getPassword()));
 			newUser.setRole(user.getRole());
 			DAOUserProfile newProfile = new DAOUserProfile();
 			userProfileDao.save(newProfile);
@@ -75,5 +75,4 @@ public class CustomUserDetailsService implements UserDetailsService {
 		}
 		throw new UsernameNotFoundException("User not found with username: " + username);
 	}
-
 }

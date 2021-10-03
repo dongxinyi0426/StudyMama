@@ -1,5 +1,10 @@
 package sg.com.studymama.DTO;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+
 public class UserDTO {
 
 	private String username;
