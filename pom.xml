@@ -144,10 +144,26 @@
 			<artifactId>javafaker</artifactId>
 			<version>1.0.2</version>
 		</dependency>
+		<dependency>
+            <groupId>es.moki.ratelimitj</groupId>
+            <artifactId>ratelimitj-inmemory</artifactId>
+            <version>0.4.1</version>
+        </dependency>
+        <!-- Base64编码需要  -->
+        <dependency>
+            <groupId>org.apache.directory.studio</groupId>
+            <artifactId>org.apache.commons.codec</artifactId>
+            <version>1.8</version>
+        </dependency>
 	</dependencies>
 	
 	<build>
 		<plugins>
+		<plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>8.7.1</version>
+      </plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

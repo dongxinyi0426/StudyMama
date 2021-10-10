@@ -14,8 +14,12 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.cors.CorsConfiguration;
+
 
 import sg.com.studymama.component.CustomJwtAuthenticationFilter;
 import sg.com.studymama.component.JwtAuthenticationEntryPoint;
@@ -54,6 +58,24 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public SessionRegistry sessionRegistry() {
         return new SessionRegistryImpl();
     }
+    
+  //configuration for maximum sessions
+    @Bean
+    public HttpSessionEventPublisher getHttpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
+    
+    //to destroy session when logout
+    @Bean
+    protected LogoutSuccessHandler appLogoutSuccessHandler() {
+        return new UserLogoutSuccessHandler();
+    }
+    
+    //to show different type of error in login page
+    @Bean
+    protected AuthenticationFailureHandler authenticationFailureHandler() {
+        return new UserAuthenticationFailureHandler();
+    }
 
 	@Bean
 	@Override
@@ -73,12 +95,22 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 						"/configuration/ui", "/swagger-resources/**", "/configuration/security", "/swagger-ui.html",
 						"/swagger-ui/*", "/swagger-ui/index.html", "/v3/api-docs/", "/webjars/**")
 				.permitAll().anyRequest().authenticated().and().exceptionHandling().and().httpBasic()
-				.authenticationEntryPoint(unauthorizedHandler).and().
+				.authenticationEntryPoint(unauthorizedHandler).and()
+				.formLogin()
+				.loginPage("/login")
+				.permitAll()
+				//.successForwardUrl("/home")
+				.failureHandler(authenticationFailureHandler())
+				.and()
+				.logout()
+				.logoutSuccessHandler(appLogoutSuccessHandler())
+				.permitAll()
+				.and()
 				// make sure we use stateless session; session won't be used to
 				// store user's state.
 
 				//sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-				sessionManagement()
+				.sessionManagement()
 				//.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.maximumSessions(1).maxSessionsPreventsLogin(true)
 				.sessionRegistry(sessionRegistry()).
