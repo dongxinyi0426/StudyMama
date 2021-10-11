@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import es.moki.ratelimitj.core.limiter.request.RequestLimitRule;
 import es.moki.ratelimitj.core.limiter.request.RequestRateLimiter;
 import es.moki.ratelimitj.inmemory.request.InMemorySlidingWindowRequestRateLimiter;
+import sg.com.studymama.service.CustomUserDetailsService;
 
 @Component
 public class LoginFailureListener implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
@@ -31,6 +32,9 @@ public class LoginFailureListener implements ApplicationListener<AuthenticationF
     
     public UserDetailsManager userDetailsManager;
     
+    @Autowired
+    public CustomUserDetailsService userService;
+    
 	@Override
     public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent event) {
         if (event.getException().getClass().equals(UsernameNotFoundException.class)) {
@@ -38,11 +42,13 @@ public class LoginFailureListener implements ApplicationListener<AuthenticationF
         }
 
         String userName = event.getAuthentication().getName();
+        
+        LOG.info("username" + userName);
 
         boolean reachLimit = limiter.overLimitWhenIncremented(userName);
 
         if(reachLimit){
-            User user = (User) userDetailsManager.loadUserByUsername(userName);
+            User user = (User) userService.loadUserByUsername(userName);
 
             LOG.info("user:{} is locked",user);
 
