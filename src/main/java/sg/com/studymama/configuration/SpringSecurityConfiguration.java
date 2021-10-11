@@ -92,10 +92,10 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	public UserDetailsService userDetailsService() {
 	    InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-	    manager.createUser(User.withUsername("user").password("password").roles("ROLE_USER").build());
-	    manager.createUser(User.withUsername("admin").password("admin").roles("ROLE_ADMIN").build());
-	    manager.createUser(User.withUsername("user1@example.com").password("user1").roles("ROLE_USER").build());
-	    manager.createUser(User.withUsername("admin1@example.com").password("admin1").roles("ROLE_ADMIN").build());
+	    manager.createUser(User.withUsername("user").password("password").roles("USER").build());
+	    manager.createUser(User.withUsername("admin").password("admin").roles("ADMIN").build());
+	    manager.createUser(User.withUsername("user1@example.com").password("user1").roles("USER").build());
+	    manager.createUser(User.withUsername("admin1@example.com").password("admin1").roles("ADMIN").build());
 	    return manager;
 	}
 	

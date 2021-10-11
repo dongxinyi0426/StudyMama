@@ -53,7 +53,7 @@ public class PostsController {
 	}
     
 	@GetMapping("/postData")
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('USER')")
 	@ResponseBody
 	public List<PostsDTO> getPostData(@RequestParam(value = "accountId", required = false) Integer accountId) {
 
