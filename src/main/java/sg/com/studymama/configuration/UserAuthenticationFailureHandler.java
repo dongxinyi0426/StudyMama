@@ -35,8 +35,8 @@ import es.moki.ratelimitj.inmemory.request.InMemorySlidingWindowRequestRateLimit
 public class UserAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler implements AuthenticationFailureHandler {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(UserAuthenticationFailureHandler.class);
-	@Autowired
-    UserDetailsManager userDetailsManager;
+	//@Autowired
+    //UserDetailsManager userDetailsManager;
 	
 	@Autowired
     private UserDetailsService userDetailsService;
@@ -64,7 +64,7 @@ public class UserAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
                user.isAccountNonLocked();
                LOG.info("user:{} is locked",user);  
                User updated = new User(user.getUsername(),user.getPassword(),user.isEnabled(),user.isAccountNonExpired(),user.isCredentialsNonExpired(),false,user.getAuthorities());
-               userDetailsManager.updateUser(updated);
+               //userDetailsManager.updateUser(updated);
         }
 				
 				if(exception.getClass().equals(UsernameNotFoundException.class) 

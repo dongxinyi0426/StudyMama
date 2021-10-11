@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,8 +28,7 @@ public class LoginFailureListener implements ApplicationListener<AuthenticationF
     Set<RequestLimitRule> rules = Collections.singleton(RequestLimitRule.of(10, TimeUnit.MINUTES,3)); // 3 request per 10 minute, per key
     RequestRateLimiter limiter = new InMemorySlidingWindowRequestRateLimiter(rules);
 
-    @Autowired
-    UserDetailsManager userDetailsManager;
+    //UserDetailsManager userDetailsManager;
 
     @Override
     public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent event) {
@@ -41,13 +41,13 @@ public class LoginFailureListener implements ApplicationListener<AuthenticationF
         boolean reachLimit = limiter.overLimitWhenIncremented(userName);
 
         if(reachLimit){
-            User user = (User) userDetailsManager.loadUserByUsername(userName);
+           // User user = (User) userDetailsManager.loadUserByUsername(userName);
 
-            LOG.info("user:{} is locked",user);
+            //LOG.info("user:{} is locked",user);
 
-            User updated = new User(user.getUsername(),user.getPassword(),user.isEnabled(),user.isAccountNonExpired(),user.isCredentialsNonExpired(),false,user.getAuthorities());
+            //User updated  = new User(user.getUsername(),user.getPassword(),user.isEnabled(),user.isAccountNonExpired(),user.isCredentialsNonExpired(),false,user.getAuthorities());
 
-            userDetailsManager.updateUser(updated);
+            //userDetailsManager.updateUser(updated);
         }
     }
 }
