@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +28,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.impl.DefaultClaims;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import sg.com.studymama.DTO.UserDTO;
 import sg.com.studymama.model.AuthenticationRequest;
 import sg.com.studymama.model.AuthenticationResponse;
@@ -49,6 +53,8 @@ public class AuthenticationController {
 
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	@ApiResponses(value = { 
+			@ApiResponse(code = 500, message = "log in failed, please contact admin.")})
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
 			throws Exception {
 		try {
