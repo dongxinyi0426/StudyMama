@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +31,7 @@ public class UserProfileController {
 	private UserProfileService userProfileService;
 	
 	@RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> updateProfile(@RequestBody UserProfileDTO userProfile) throws Exception {
 		LOG.info("Update profile: " + userProfile.toString());
 		DAOUser user = userDetailsService.find(userProfile.getUsername());

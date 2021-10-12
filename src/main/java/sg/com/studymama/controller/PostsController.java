@@ -48,6 +48,7 @@ public class PostsController {
 
 
 	@GetMapping("post")
+	@PreAuthorize("hasRole('USER')")
 	public String postList() {
 		return "/PostList";//overall post page include some basic info
 	}
@@ -64,6 +65,7 @@ public class PostsController {
 	}
     
 	@GetMapping("/post/{postId}")
+	@PreAuthorize("hasRole('USER')")
 	public PostsDTO postData(@PathVariable("postId")Integer id, Model model) {
 		
 		PostsDTO postDTO = null;
@@ -78,6 +80,7 @@ public class PostsController {
 	}
 
 	@PostMapping("/postFormSubmit")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<PostsDTO> postFormSubmit(@RequestBody PostsDTO postDTO, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, Model model) {
 		
@@ -99,6 +102,7 @@ public class PostsController {
 
 	}
 	@RequestMapping(value = "/postDelete",produces = "application/json; charset=UTF-8")
+	@PreAuthorize("hasRole('USER')")
 	public void postDelete(@RequestParam(name="postId")Integer postId) { 
 		LOG.info("POST ID IS " + postId);
 		
