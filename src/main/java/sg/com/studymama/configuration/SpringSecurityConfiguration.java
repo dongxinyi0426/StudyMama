@@ -1,5 +1,11 @@
 package sg.com.studymama.configuration;
 
+import java.util.EnumSet;
+
+import javax.servlet.ServletContext;
+import javax.servlet.SessionTrackingMode;
+import javax.servlet.http.HttpSessionEvent;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +33,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import sg.com.studymama.component.CustomJwtAuthenticationFilter;
 import sg.com.studymama.component.JwtAuthenticationEntryPoint;
+import sg.com.studymama.component.MySessionExpiredStrategy;
 import sg.com.studymama.service.CustomUserDetailsService;
 
 @Configuration
@@ -61,8 +68,13 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	//configuration for maximum sessions
     @Bean
     public SessionRegistry sessionRegistry() {
-        return new SessionRegistryImpl();
+       // return new SessionRegistryImpl();
+    	SessionRegistry sessionRegistry = new SessionRegistryImpl();
+        return sessionRegistry;
     }
+    
+    @Autowired
+    private MySessionExpiredStrategy sessionExpiredStrategy;
     
   //configuration for maximum sessions
     @Bean
@@ -113,7 +125,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.permitAll().anyRequest().authenticated().and().exceptionHandling().and().httpBasic()
 				.authenticationEntryPoint(unauthorizedHandler).and()
 				.formLogin()
-				.loginPage("/login")
+				.loginPage("/authenticate")
 				.permitAll()
 				//.successForwardUrl("/home")
 				.failureHandler(authenticationFailureHandler())
@@ -128,9 +140,10 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				//sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 				.sessionManagement()
 				//.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.invalidSessionUrl("/session/invalid")
 				.maximumSessions(1).maxSessionsPreventsLogin(true)
 				.sessionRegistry(sessionRegistry()).
-				and().invalidSessionUrl("/login");
+				expiredSessionStrategy(sessionExpiredStrategy);
 		httpSecurity.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
