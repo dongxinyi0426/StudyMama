@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.jsonwebtoken.Claims;
@@ -35,6 +36,8 @@ import sg.com.studymama.model.AuthenticationRequest;
 import sg.com.studymama.model.AuthenticationResponse;
 import sg.com.studymama.service.CustomUserDetailsService;
 import sg.com.studymama.service.JwtUtil;
+
+import org.springframework.http.HttpStatus;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -114,4 +117,10 @@ public class AuthenticationController {
 		}
 		return expectedMap;
 	}
+	
+	@GetMapping("/session/invalid")
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public String sessionInvalid(){
+        return "session invalid, try again";
+    }
 }
